@@ -88,8 +88,11 @@ all_anime = all_anime.sort((a, b) => a.date - b.date);
 basData.all_anime = all_anime;
 
 // put together the list of episodes for recent-and-future shows
-let skipWeeks = basData.events.filter((event) => event.class == 'skip').map((event) => util.formatShortDate(event.date));
+let skipWeeks = basData.events.filter((event) => event.class == 'skip');
+skipWeeks = util.recentAndFuture(skipWeeks, 'date', false);
+skipWeeks = skipWeeks.map((event) => util.formatShortDate(event.date));
 console.log("Skip weeks:", skipWeeks);
+
 basData.schedule = episodes.makeEpisodeList(basData.slot1, basData.slot2, basData.slot3, skipWeeks);
 
 basData.historyYears = [];

@@ -356,6 +356,14 @@ events:
     class: social
     venue: Dice Tower
     time: 6pm
+
+  - name: DAN DA DAN
+    date: 2025-09-13
+    class: cinema
+    venue: "Vue Basingstoke"
+    picture: dandadan
+    time: 6:15pm
+
   - name: Board Games
     date: 2025-02-13
     class: social
@@ -411,3 +419,10 @@ events:
     class: social
     venue: Dice Tower
     time: 6pm
+
+  - name: No Meeting
+    date: 2025-12-23
+    class: skip
+  - name: No Meeting
+    date: 2025-12-30
+    class: skip

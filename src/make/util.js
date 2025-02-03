@@ -153,7 +153,7 @@ function recentAndFuture(items, key = 'date', requireName = true) {
     items = _.filter(items, item => _.has(item, "name"));
   }
 
-  let cutoff = recentDateCutoff;
+  let cutoff = recentDateCutoff();
   let [before, after] = _.partition(items, item => item[key] < cutoff);
   let current = before[before.length - 1];
   if (current !== undefined) {

@@ -47,7 +47,7 @@ function tuesdayEvents(skipDates) {
 
     let event = {
       ...expandEventDate(date, "7pm"),
-      name: online ? 'Online Meeting' : 'Anime Society Meeting',
+      name: online ? 'Online Meeting' : 'Anime Night',
       class: online ? 'online' : 'anime',
       price: online ? null : "&pound;4",
       venue: online ? 'Discord' : 'The White Hart',

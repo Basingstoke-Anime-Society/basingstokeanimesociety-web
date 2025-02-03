@@ -34,8 +34,8 @@
 
 <nav id='section-social'>
 <a class='btn btn-mail' href='mailto:marcus@basingstokeanimesociety.com'><i></i><span>Mail</span></a>
-<a class='btn btn-twitter-broken' href='https://twitter.com/BasingAnime' target="_blank"><i></i><span>Twitter</span></a>
-<a class='btn btn-fb' href='https://www.facebook.com/groups/basingstokeanimesociety/' target="_blank"><i></i><span>Facebook</span></a>
+<!-- <a class='btn btn-twitter-broken' href='https://twitter.com/BasingAnime' target="_blank"><i></i><span>Twitter</span></a> -->
+<!-- <a class='btn btn-fb' href='https://www.facebook.com/groups/basingstokeanimesociety/' target="_blank"><i></i><span>Facebook</span></a> -->
 <a class='btn btn-discord' href='https://discord.gg/sypjyaA' target="_blank"><i></i><span>Discord</span></a>
 </nav>
 
@@ -50,7 +50,7 @@
   </section>
 
   <section id='section-next-meeting' class='box'>
-    <h2>Next Weekly Meeting</h2>
+    <h2>Next Weekly Meet</h2>
 
     <article id="next-meeting-date" class="focus-date event-anime">
       <time datetime="{{ nextMainEvent.date }}">
@@ -76,10 +76,6 @@
 </div>
 
 <div>
-  <!-- <section class='box'>
-    <h3 class='big'>Showing anime in Basingstoke every Tuesday.</h3>
-  </section> -->
-
   <section id='section-next-social' class='box'>
     <h2>Next Social Event</h2>
 
@@ -106,12 +102,7 @@
       <div class="next-online-side focus-date-side">{{ nextOnline.name }}<br>{{ nextOnline.time }}</div>
     </article>
 
-    <!-- <h3>Venue: <span id="next-online-event">{{ nextOnline.venue }}</span></h3> -->
-  <!-- </section>
-
-  <section class="box box--button" id="section-discord"> -->
-    <!-- <h2>Community</h2>
-    <p>Find us on Discord</p> -->
+    <!-- <p class='p--icon'><img class="rating-img rating-18 icon" src="images/rating/18.svg">Age requirement</p> -->
     <a class='btn btn-discord' href='https://discord.gg/sypjyaA' target="_blank"><i></i><span>Discord</span></a>
   </section>
 </div>

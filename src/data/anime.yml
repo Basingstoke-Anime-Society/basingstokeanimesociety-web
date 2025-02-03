@@ -205,6 +205,23 @@ slot1:
   #   count: 1
   #   preview: false
 
+  - from: 2025-04-08
+    name: "The Saga of Tanya the Evil"
+    picture: tanya-the-evil
+    rating: 15
+    count: 12
+    genre: [ "Action", "War", "Isekai" ]
+
+  - from: 2025-05-20
+    name: "Iroduku: The World in Colours"
+    picture: iroduku
+    rating: pg
+    genre: [ "Slice of life", "Drama" ]
+    count: 13
+    episodes:
+      - episode: 7
+        show: single
+
 slot2:
   - from: 2019-01-08
     name: Hunter &times; Hunter
@@ -404,6 +421,12 @@ slot2:
     episodes:
       - episode: 9
         show: single
+
+  - from: 2025-04-22
+    name: Durarara!!
+    picture: durarara
+    count: 24
+    rating: 15
 
 slot3:
   - from: 2020-02-18
@@ -652,6 +675,20 @@ slot3:
     genre: [ "Romance", "Comedy" ]
     count: 12
     rating: 12
+
+  - from: 2025-04-15
+    name: "By the Grace of the Gods S2"
+    picture: by-the-grace-of-the-gods
+    genre: [ "Isekai", "Slice of life" ]
+    count: 12
+    rating: 12
+
+  - from: 2025-05-27
+    name: "Konusuba: An Explosion on This Wonderful World"
+    picture: konosuba-explosion
+    genre: [ "" ]
+    count: 12
+    rating: 15
 
 
 movies:

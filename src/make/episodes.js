@@ -189,9 +189,8 @@ function makeEpisodeList(slot1, slot2, slot3, skipWeeks) {
       slot2: slot2weeks[week],
       slot3: slot3weeks[week],
     };
+    console.log(week, schedule[week]);
   }
-
-  console.log("Schedule", schedule);
 
   return schedule;
 }
