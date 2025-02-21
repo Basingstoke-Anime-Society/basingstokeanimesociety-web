@@ -217,7 +217,9 @@ time.time--social, .event-social time {
         .series-grid.series-grid--large-first figure:first-child figcaption {
           padding: 20px; }
           .series-grid.series-grid--large-first figure:first-child figcaption h3 {
-            font-size: 26px; } }
+            font-size: 26px; }
+        .series-grid.series-grid--large-first figure:first-child .rating-img {
+          right: 272px; } }
 
 figure.series--right {
   position: relative;
