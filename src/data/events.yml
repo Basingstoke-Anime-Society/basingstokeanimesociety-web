@@ -356,14 +356,6 @@ events:
     class: social
     venue: Dice Tower
     time: 6pm
-
-  - name: DAN DA DAN
-    date: 2025-09-13
-    class: cinema
-    venue: "Vue Basingstoke"
-    picture: dandadan
-    time: 6:15pm
-
   - name: Board Games
     date: 2025-02-13
     class: social
@@ -374,6 +366,14 @@ events:
     class: social
     venue: Dice Tower
     time: 6pm
+
+  - name: "Mobile Suit Gundam: GQuuuuuuX -Beginning-"
+    date: 2025-03-15
+    class: cinema
+    venue: "Vue Basingstoke"
+    picture: gundam-gquuuuuux
+    time: 2:30pm
+
   - name: Board Games
     date: 2025-04-10
     class: social
@@ -384,6 +384,16 @@ events:
     class: social
     venue: Dice Tower
     time: 6pm
+
+  - name: "The Saga of Tanya the Evil: The Movie"
+    date: 2025-05-24
+    class: cinema
+    price: "£2"
+    time: 1pm
+    venue: "The White Hart"
+    picture: tanya-the-evil
+    rating: 15
+
   - name: Board Games
     date: 2025-06-12
     class: social
