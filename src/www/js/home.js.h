@@ -155,7 +155,7 @@ function futureN(items, number) {
 }
 
 function excludeSeries(items, exclude) {
-  excludeNames = exclude.map(function (item) {
+  let excludeNames = exclude.map(function (item) {
     return item.name;
   });
   return items.filter(function (item) {
@@ -164,28 +164,30 @@ function excludeSeries(items, exclude) {
 }
 
 function setupHomeComingSoon() {
-  var rowCutoffs = {1: 2, 2: 5, 3: 8, 4: 11};
-  function findCutoff(items, maxRow) {
-    for (var row = maxRow; row > 1; row--) {
-      var cutoff = rowCutoffs[row];
-      if (items >= cutoff)
-        return cutoff;
-    }
-    return rowCutoffs[1];
-  }
+  // var rowCutoffs = {1: 2, 2: 5, 3: 8, 4: 11};
+  // function findCutoff(items, maxRow) {
+  //   for (var row = maxRow; row > 1; row--) {
+  //     var cutoff = rowCutoffs[row];
+  //     if (items >= cutoff)
+  //       return cutoff;
+  //   }
+  //   return rowCutoffs[1];
+  // }
 
-  comingSoon = futureN(comingSoon, 12);
+  comingSoon = futureN(comingSoon, 16);
   comingSoon = excludeSeries(comingSoon, [currentSlot1, currentSlot2, currentSlot3]);
-  comingSoon = futureN(comingSoon, 8);
+  comingSoon = futureN(comingSoon, 12);
 
   var comingSoonHTML = '';
-  for (item of comingSoon) {
+  for (let item of comingSoon) {
     if (item.noCalendar)
       continue;
+    var isMovie
     var html = template_series(item, {
       isNew: true,
       showDate: true,
-      showRating: true
+      showRating: true,
+      large: item.movie
     });
     comingSoonHTML = comingSoonHTML + html;
   }
