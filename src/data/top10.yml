@@ -224,6 +224,9 @@ top10:
       - name: "Mushoku Tensei: Jobless Reincarnation"
         picture: mushoku-tensei
         genre: [ "Isekai", "Adventure", "Drama" ]
+      - name: "Orb: On the Movements of the Earth"
+        picture: orb
+        genre: [ "Drama" ]
       - name: "Lycoris Recoil"
         picture: lycoris-recoil
         genre: [ "Action", "Mystery" ]

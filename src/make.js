@@ -156,6 +156,16 @@ _.each([basData.slot1, basData.slot2, basData.slot3, basData.movies], slot => {
   });
 });
 
+_.each(basData.events, (event) => {
+  if (event.picture !== undefined && fs.existsSync('series/'+event.picture+'.png')) {
+    fs.copyFile('series/'+event.picture+'.png', '../dist/images/series/'+event.picture+'.png', (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+  }
+});
+
 
 // news
 _.each(basData.news, article => {

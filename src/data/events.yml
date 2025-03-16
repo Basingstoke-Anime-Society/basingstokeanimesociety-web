@@ -374,11 +374,20 @@ events:
     picture: gundam-gquuuuuux
     time: 2:30pm
 
+  - name: "Flow"
+    date: 2025-03-21
+    class: cinema
+    venue: "Vue Basingstoke"
+    picture: flow
+    # time: 2:30pm
+
   - name: Board Games
     date: 2025-04-10
     class: social
     venue: Dice Tower
     time: 6pm
+
+
   - name: Board Games
     date: 2025-05-08
     class: social
