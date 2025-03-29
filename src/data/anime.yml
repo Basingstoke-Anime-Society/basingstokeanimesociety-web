@@ -199,11 +199,11 @@ slot1:
       - episode: 3
         show: single
 
-  # - from: 2025-04-01
-  #   name: "?"
-  #   picture: question
-  #   count: 1
-  #   preview: false
+  - from: 2025-04-01
+    name: "?"
+    picture: question
+    count: 1
+    preview: false
 
   - from: 2025-04-08
     name: "The Saga of Tanya the Evil"
