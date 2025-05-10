@@ -770,7 +770,7 @@ movies:
   - name: "The Saga of Tanya the Evil: The Movie"
     date: 2025-05-24
     time: 1pm
-    picture: tanya-the-evil
+    picture: tanya-the-evil-movie
     venue: "The White Hart"
     rating: 15
     hide: true
