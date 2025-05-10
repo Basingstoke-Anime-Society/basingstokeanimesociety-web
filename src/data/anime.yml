@@ -222,6 +222,21 @@ slot1:
       - episode: 7
         show: single
 
+  - from: 2025-07-08
+    name: "takt op.Destiny"
+    picture: takt-op-destiny
+    rating: 12
+    genre: [ "Music", "Action", "Adventure" ]
+    count: 12
+
+  - from: 2025-08-19
+    name: "B: The Beginning"
+    picture: b-the-beginning
+    rating: 15
+    genre: [ "Mystery", "Crime", "Dark" ]
+    count: 12
+
+
 slot2:
   - from: 2019-01-08
     name: Hunter &times; Hunter
@@ -426,6 +441,20 @@ slot2:
     name: Durarara!!
     picture: durarara
     count: 24
+    rating: 15
+
+  - from: 2025-07-15
+    name: "Girls' Last Tour"
+    picture: girls-last-tour
+    count: 12
+    genre: [ "Adventure", "Sci fi", "Slice of life" ]
+    rating: 12
+
+  - from: 2025-08-26
+    name: "Reincarnated as a Sword"
+    picture: reincarnated-as-a-sword
+    count: 12
+    genre: [ "Isekai", "Adventure", "Action", "Fantasy" ]
     rating: 15
 
 slot3:
@@ -686,10 +715,33 @@ slot3:
   - from: 2025-05-27
     name: "Konusuba: An Explosion on This Wonderful World"
     picture: konosuba-explosion
-    genre: [ "" ]
+    genre: [ "Adventure" ]
     count: 12
     rating: 15
 
+  - from: 2025-07-08
+    name: "Bocchi the Rock"
+    picture: bocchi
+    genre: [ "Music", "Drama", "Slice of life"]
+    count: 12
+    rating: 12
+
+  - from: 2025-08-19
+    name: "When Will Ayumu Make His Move?"
+    picture: ayumu
+    genre: [ "Comedy", "Romance", "Slice of life" ]
+    count: 12
+    rating: 12
+
+  - from: 2025-09-30
+    name: "Konosuba S3"
+    picture: konosuba3
+    genre: [ "Isekai", "Comedy" ]
+    count: 11
+    rating: 15
+    episodes:
+      - episode: 7
+        show: single
 
 movies:
   - name: "Konosuba - Legend of Crimson"

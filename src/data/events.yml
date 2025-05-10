@@ -445,3 +445,5 @@ events:
   - name: No Meeting
     date: 2025-12-30
     class: skip
+
+  # 2026
