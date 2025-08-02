@@ -236,6 +236,12 @@ slot1:
     genre: [ "Mystery", "Crime", "Dark" ]
     count: 12
 
+  - from: 2025-09-30
+    name: "Fairy Gone"
+    picture: fairy-gone
+    rating: 15
+    genre: [ "Mystery", "War", "Dark" ]
+    count: 24
 
 slot2:
   - from: 2019-01-08
@@ -455,6 +461,13 @@ slot2:
     picture: reincarnated-as-a-sword
     count: 12
     genre: [ "Isekai", "Adventure", "Action", "Fantasy" ]
+    rating: 15
+
+  - from: 2025-10-07
+    name: "To Your Eternity"
+    picture: to-your-eternity
+    count: 20
+    genre: [ "Mystery", "Action", "Fantasy" ]
     rating: 15
 
 slot3:
@@ -742,6 +755,13 @@ slot3:
     episodes:
       - episode: 7
         show: single
+
+  - from: 2025-11-11
+    name: The Kawai Complex Guide to Manors and Hostel Behaviour
+    picture: kawai-complex
+    genre: [ "Comedy" ]
+    count: 12
+    rating: 12
 
 movies:
   - name: "Konosuba - Legend of Crimson"

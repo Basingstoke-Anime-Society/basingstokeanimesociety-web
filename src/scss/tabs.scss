@@ -1,3 +1,5 @@
+@use 'responsive';
+
 .tabs {
   display: flex;
   flex-direction: row;
@@ -26,7 +28,7 @@
     }
   }
 
-  @include small-medium {
+  @include responsive.small-medium {
     display: block;
   }
 }

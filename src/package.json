@@ -11,10 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "handlebars": "^4.7.7",
-    "js-yaml": "^3.13.1"
+    "js-yaml": "^3.13.1",
+    "sass": "^1.89.2"
   },
   "devDependencies": {
-    "node-sass": "^7.0.1",
     "http-server": "^14.1.0"
   }
 }

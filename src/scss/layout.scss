@@ -1,4 +1,4 @@
-@import 'responsive';
+@use 'responsive';
 
 $gap: 32px;
 $gap-small: 20px;
@@ -37,7 +37,7 @@ $series-height: 180px;
   grid-gap: $gap-small;
 }
 
-@include large {
+@include responsive.large {
   .lr, .rl, .lre {
     > *, > * > .box:first-child {
       margin-top: 0;
@@ -45,7 +45,7 @@ $series-height: 180px;
   }
 }
 
-@include small-medium {
+@include responsive.small-medium {
   .lr, .rl, .lre, .c3e {
     display: block;
     > * {

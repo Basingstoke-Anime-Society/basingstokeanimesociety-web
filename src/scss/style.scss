@@ -1,10 +1,10 @@
-@import 'colour';
-@import 'responsive';
-@import 'fonts';
-@import 'tabs';
-@import 'time';
-@import 'layout';
-@import 'anime';
+@use 'colour';
+@use 'responsive';
+@use 'fonts';
+@use 'tabs';
+@use 'time';
+@use 'layout';
+@use 'anime';
 
 html {
   min-height: 100%;
@@ -133,7 +133,7 @@ body {
   }
 
   h2 {
-    color: $series-ident;
+    color: colour.$series-ident;
   }
 
   .btn.btn-discord {
@@ -531,7 +531,7 @@ p.series-ident {
   text-transform: uppercase;
   margin: 0;
   &, article.event & {
-    color: $series-ident;
+    color: colour.$series-ident;
   }
 
   + h3 {
@@ -1143,7 +1143,7 @@ header.top10pick {
       }
       span {
         display: inline-block;
-        color: $series-ident;
+        color: colour.$series-ident;
         font-weight: bold;
         width: 36px;
         height: 36px;
@@ -1163,7 +1163,7 @@ header.top10pick {
     &.anime-index-1 {
       .top10-index {
         span {
-          background: $series-ident;
+          background: colour.$series-ident;
           color: black;
         }
       }
@@ -1175,7 +1175,7 @@ header.top10pick {
         left: -5px;
         right: -5px;
         bottom: -5px;
-        border: 2px solid $series-ident;
+        border: 2px solid colour.$series-ident;
         border-radius: 5px;
       }
     }
@@ -1183,7 +1183,7 @@ header.top10pick {
     &.anime-index-2, &.anime-index-3 {
       .top10-index {
         span {
-          border: 2px solid $series-ident;
+          border: 2px solid colour.$series-ident;
           margin-top: -2px;
           margin-bottom: -2px;
         }
@@ -1196,7 +1196,7 @@ header.top10pick {
         left: -5px;
         right: -5px;
         bottom: -5px;
-        border: 1px solid $series-ident;
+        border: 1px solid colour.$series-ident;
         border-radius: 5px;
       }
     }
@@ -1372,11 +1372,11 @@ body.genre-filter {
 
 @media (max-width: 1280px) {
   #now-showing figure {
+    min-height: auto;
     &, img.series-picture {
       width: 22vw;
       margin-bottom: -5px;
     }
-    min-height: auto;
   }
   .btn-where-when {
     right: 5px;

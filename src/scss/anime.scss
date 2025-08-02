@@ -1,3 +1,6 @@
+@use 'responsive';
+@use 'layout';
+
 $series-height: 180px;
 
 figure.series--right {
@@ -73,7 +76,7 @@ figure.series--right {
   }
 
   &.series--large {
-    @include medium-large {
+    @include responsive.medium-large {
       padding-right: 252px;
 
       &, img.series-picture {
@@ -97,34 +100,34 @@ figure.series--right {
 .series-grid {
   display: grid;
 
-  @include medium-large {
+  @include responsive.medium-large {
     grid-template-columns: 1fr 1fr;
   }
 
-  @include large {
-    grid-gap: $gap;
+  @include responsive.large {
+    grid-gap: layout.$gap;
 
     figure.series--large {
       &, img.series-picture {
-        height: $series-height * 2 + $gap;
+        height: $series-height * 2 + layout.$gap;
       }
     }
   }
 
-  @include medium {
-    grid-gap: $gap-small;
+  @include responsive.medium {
+    grid-gap: layout.$gap-small;
 
     figure.series--large {
       &, img.series-picture {
-        height: $series-height * 2 + $gap-small;
+        height: $series-height * 2 + layout.$gap-small;
       }
     }
   }
 
-  @include small {
+  @include responsive.small {
     display: flex;
     flex-direction: column;
-    gap: $gap-small;
+    gap: layout.$gap-small;
   }
 
   figure {
@@ -228,7 +231,7 @@ figure.series--right {
     }
 
     &.series--large {
-      @include medium-large {
+      @include responsive.medium-large {
         grid-column: 1 / 3;
         .rating-img {
           right: 272px;
@@ -248,7 +251,7 @@ figure.series--right {
 
 
   &.series-grid--large-first {
-    @include medium-large {
+    @include responsive.medium-large {
       grid-template-rows: 2fr 1fr;
       grid-auto-rows: 1fr;
       grid-template-areas: "one one";

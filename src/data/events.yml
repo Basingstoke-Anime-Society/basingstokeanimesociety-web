@@ -418,11 +418,30 @@ events:
     class: social
     venue: Dice Tower
     time: 6pm
+
+  - name: "Steamboy"
+    date: 2025-08-23
+    class: cinema
+    price: "£2"
+    time: 1pm
+    venue: "The White Hart"
+    picture: steamboy
+    rating: 15
+
   - name: Board Games
     date: 2025-09-11
     class: social
     venue: Dice Tower
     time: 6pm
+
+  - name: 19th Anniversary BBQ
+    date: 2025-09-13
+    class: social
+    # venue: Swarraton Village Hall, SO24 9TQ
+    venue: false
+    time: Midday
+    special: true
+
   - name: Board Games
     date: 2025-10-09
     class: social

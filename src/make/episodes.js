@@ -19,7 +19,7 @@ function flowEpisodes(series, skipWeeks) {
       end = directive.end
     }
   }
-  console.log(series.name, "Episodes", start, "to", end);
+  // console.log(series.name, "Episodes", start, "to", end);
 
   // make an episode list
   let episodes = []
@@ -49,7 +49,7 @@ function flowEpisodes(series, skipWeeks) {
     }
   }
   series.episodes = episodes;
-  console.log(series.name, "Episode flow, adjusted:", episodes);
+  // console.log(series.name, "Episode flow, adjusted:", episodes);
   
   // flow by week
   if (episodes.length > 0) {
@@ -69,7 +69,7 @@ function flowEpisodes(series, skipWeeks) {
 
       if (_.has(episode, "delayto")) {
         let delayto = new Date(episode.delayto);
-        console.log(series.name, episode.episode, "delay to", delayto);
+        // console.log(series.name, episode.episode, "delay to", delayto);
         if (delayto > weekDate) {
           // console.log(series.name, episode.episode, "delay: set week to", delayto);
           weekDate = delayto;
@@ -101,7 +101,7 @@ function flowEpisodes(series, skipWeeks) {
     }
 
     series.weeks = weeks;
-    console.log(series.name, "Weeks:", JSON.stringify(weeks, null, 2));
+    // console.log(series.name, "Weeks:", JSON.stringify(weeks, null, 2));
   }
 
   return series;
@@ -126,9 +126,9 @@ function makeEpisodeList(slot1, slot2, slot3, skipWeeks) {
   slot2 = util.recentAndFuture(slot2).map((series) => flowEpisodes(series, skipWeeks));
   slot3 = util.recentAndFuture(slot3).map((series) => flowEpisodes(series, skipWeeks));
 
-  console.log("Slot 1 series", slot1);
-  console.log("Slot 2 series", slot2);
-  console.log("Slot 3 series", slot3);
+  // console.log("Slot 1 series", slot1);
+  // console.log("Slot 2 series", slot2);
+  // console.log("Slot 3 series", slot3);
 
   let slot1weeks = {};
   let slot2weeks = {};
@@ -171,11 +171,11 @@ function makeEpisodeList(slot1, slot2, slot3, skipWeeks) {
       }
     }
   }
-  console.log("Last date:", lastDate);
+  // console.log("Last date:", lastDate);
 
-  console.log("Slot 1 weeks", slot1weeks);
-  console.log("Slot 2 weeks", slot2weeks);
-  console.log("Slot 3 weeks", slot3weeks);
+  // console.log("Slot 1 weeks", slot1weeks);
+  // console.log("Slot 2 weeks", slot2weeks);
+  // console.log("Slot 3 weeks", slot3weeks);
 
   // make the schedule
   let schedule = {};
@@ -189,7 +189,7 @@ function makeEpisodeList(slot1, slot2, slot3, skipWeeks) {
       slot2: slot2weeks[week],
       slot3: slot3weeks[week],
     };
-    console.log(week, schedule[week]);
+    // console.log(week, schedule[week]);
   }
 
   return schedule;

@@ -1,8 +1,9 @@
 const fs = require('fs');
+const path = require('path');
 
 const Handlebars = require('handlebars');
 const yaml = require('js-yaml');
-const sass = require('node-sass');
+const sass = require('sass');
 const _ = require('lodash');
 
 const util = require('./make/util.js');
@@ -11,12 +12,14 @@ const episodes = require('./make/episodes.js');
 const _events = require('./make/events.js');
 
 // partials
+let jsPath = path.resolve('./www/js');
+console.log("JS partials in:", jsPath);
 fs.readdir('./www/js', {encoding: 'utf8'}, (err, files) => {
   if (err) {
     console.log("Error reading partials dir:", err);
     return;
   }
-  // console.log("JS partials", files);
+  console.log("JS partials", files);
 
   for (let file of files) {
     fs.readFile('./www/js/'+file, 'utf8', (err, data) => {
@@ -26,18 +29,20 @@ fs.readdir('./www/js', {encoding: 'utf8'}, (err, files) => {
       }
 
       let name = file.replace('.js.h', '_js');
-      // console.log("Registering partial", name);
+      console.log("Registering partial", name);
       Handlebars.registerPartial(name, data);
     });
   }
 });
 
+let partialPath = path.resolve('./www/partials');
+console.log("Partials in:", partialPath);
 fs.readdir('./www/partials', {encoding: 'utf8'}, (err, files) => {
   if (err) {
     console.log("Error reading partials dir:", err);
     return;
   }
-  // console.log("Partials", files);
+  console.log("Partials", files);
 
   for (let file of files) {
     fs.readFile('./www/partials/'+file, 'utf8', (err, data) => {
@@ -354,31 +359,33 @@ function writeTemplate(src, dest, data, callback = (err) => {}) {
 }
 
 // stylesheet
-let sassOptions = {};
-sass.render({
-  file: 'scss/style.scss',
-  sassOptions
-}, function(err, result) {
-  if (err) {
-    console.log(err);
-  }
-  basData.stylesheetVersion = util.md5sum(result.css);
-  fs.writeFile('../dist/style.css', result.css, 'utf-8', err => {});
+setTimeout(() => {
+  let sassOptions = {};
+  sass.render({
+    file: 'scss/style.scss',
+    sassOptions
+  }, function(err, result) {
+    if (err) {
+      console.log(err);
+    }
+    basData.stylesheetVersion = util.md5sum(result.css);
+    fs.writeFile('../dist/style.css', result.css, 'utf-8', err => {});
 
-  writeTemplate('www/js/script.js.h', 'script.js', basData, (err) => {
-    let scriptData = fs.readFileSync('../dist/script.js');
-    basData.scriptVersion = util.md5sum(scriptData);
-    
-    writeTemplate('www/index2.html.h', 'index.html', basData);
-    writeTemplate('www/history.html.h', 'history.html', basData);
-    writeTemplate('www/recommendations2.html.h', 'recommendations.html', basData);
+    writeTemplate('www/js/script.js.h', 'script.js', basData, (err) => {
+      let scriptData = fs.readFileSync('../dist/script.js');
+      basData.scriptVersion = util.md5sum(scriptData);
 
-    basData['noindex'] = true
-    writeTemplate('www/index2.html.h', 'noindex/index.html', basData);
-    writeTemplate('www/history.html.h', 'noindex/history.html', basData);
-    writeTemplate('www/recommendations2.html.h', 'noindex/recommendations.html', basData);
+      writeTemplate('www/index2.html.h', 'index.html', basData);
+      writeTemplate('www/history.html.h', 'history.html', basData);
+      writeTemplate('www/recommendations2.html.h', 'recommendations.html', basData);
+
+      basData['noindex'] = true
+      writeTemplate('www/index2.html.h', 'noindex/index.html', basData);
+      writeTemplate('www/history.html.h', 'noindex/history.html', basData);
+      writeTemplate('www/recommendations2.html.h', 'noindex/recommendations.html', basData);
+    });
   });
-});
+}, 5000);
 
 
 video.makeVideos(basData);
