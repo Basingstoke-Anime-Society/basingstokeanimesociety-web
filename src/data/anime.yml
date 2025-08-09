@@ -847,6 +847,14 @@ movies:
     rating: 15
     hide: true
 
+  - name: "Steamboy"
+    date: 2025-08-23
+    time: 1pm
+    picture: steamboy
+    venue: "The White Hart"
+    rating: 15
+    hide: true
+
 
   # - name: Your Name
   #   date: 2021-12-14
