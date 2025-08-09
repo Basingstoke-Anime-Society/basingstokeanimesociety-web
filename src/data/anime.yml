@@ -757,11 +757,11 @@ slot3:
         show: single
 
   - from: 2025-11-11
-    name: The Kawai Complex Guide to Manors and Hostel Behaviour
-    picture: kawai-complex
-    genre: [ "Comedy" ]
+    name: "Yuru Camp S3"
+    picture: yuru-camp-s2
+    genre: [ "Slice of life" ]
     count: 12
-    rating: 12
+    rating: pg
 
 movies:
   - name: "Konosuba - Legend of Crimson"
