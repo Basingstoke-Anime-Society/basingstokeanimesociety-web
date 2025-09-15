@@ -34,8 +34,6 @@
 
 <nav id='section-social'>
 <a class='btn btn-mail' href='mailto:marcus@basingstokeanimesociety.com'><i></i><span>Mail</span></a>
-<!-- <a class='btn btn-twitter-broken' href='https://twitter.com/BasingAnime' target="_blank"><i></i><span>Twitter</span></a> -->
-<!-- <a class='btn btn-fb' href='https://www.facebook.com/groups/basingstokeanimesociety/' target="_blank"><i></i><span>Facebook</span></a> -->
 <a class='btn btn-discord' href='https://discord.gg/sypjyaA' target="_blank"><i></i><span>Discord</span></a>
 </nav>
 
@@ -132,6 +130,15 @@
   </div>
 </section>
 
+<!-- <section id="section-voting">
+  <h2 class="underline">Voting</h2>
+  <div class="box box--button">
+    <h2>Anime Voting</h2>
+    <p>Help us decide what to show next.</p>
+    <a class='btn btn-voting' href='voting.html'><span>Voting</span></a>
+  </div>
+</section> -->
+
 <nav class='tabs'>
 <a class='tab tab--show' data-tab='coming-soon'>Coming Soon</a>
 <a class='tab' data-tab='news'>News</a>
@@ -171,5 +178,4 @@
 </aside>
 
 <script src="script.js?ver={{ scriptVersion }}"></script>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>

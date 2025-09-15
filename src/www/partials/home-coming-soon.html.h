@@ -29,6 +29,13 @@
   </div>
 
   <div>
+    <div class="box box--button">
+      <h2>Anime Selection</h2>
+      <p>Help us decide what to show next!</p>
+      <a class='btn btn-voting' href='voting.html'><span>Vote</span></a>
+    </div>
+
+    <h2>Upcoming Anime</h2>
     <div id='coming-soon' class='series-grid'></div>
   </div>
 </div>

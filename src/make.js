@@ -378,6 +378,8 @@ setTimeout(() => {
       writeTemplate('www/index2.html.h', 'index.html', basData);
       writeTemplate('www/history.html.h', 'history.html', basData);
       writeTemplate('www/recommendations2.html.h', 'recommendations.html', basData);
+      writeTemplate('www/voting.html.h', 'voting.html', basData);
+      writeTemplate('www/voting-admin.html.h', 'voting-admin.html', basData);
 
       basData['noindex'] = true
       writeTemplate('www/index2.html.h', 'noindex/index.html', basData);

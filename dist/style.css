@@ -287,6 +287,7 @@ figure.series--right.series--small-title figcaption h3 {
   }
   figure.series--right.series--large figcaption {
     padding: 20px;
+    padding-right: 40px;
   }
   figure.series--right.series--large figcaption h3 {
     font-size: 26px;
@@ -409,7 +410,7 @@ body.night .series-grid figure.movie {
     grid-column: 1/3;
   }
   .series-grid figure.series--large .rating-img {
-    right: 272px;
+    right: 282px;
   }
 }
 .series-grid figure .rating-hover {
@@ -442,6 +443,54 @@ body.night .series-grid figure.movie {
   .series-grid.series-grid--large-first figure:first-child .rating-img {
     right: 272px;
   }
+}
+
+/* Voting */
+.voting-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  margin: 17px 0;
+  align-items: center;
+}
+.voting-buttons button {
+  min-width: 50px;
+  height: 50px;
+  padding: 0;
+  border: 0 none;
+  border-radius: 50px;
+  background: white;
+  box-shadow: 0 2px 4px black;
+  cursor: pointer;
+}
+.voting-buttons button span {
+  display: inline-block;
+  height: 50px;
+  padding: 0 20px 0 4px;
+  line-height: 50px;
+  font-size: 24px;
+  font-weight: bold;
+  vertical-align: top;
+}
+.voting-buttons button span.icon {
+  width: 50px;
+  padding: 0;
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.voting-buttons button.vote-up span.icon {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/57/Thumb_up_icon_2.svg);
+}
+.voting-buttons button.vote-down span.icon {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/57/Thumb_up_icon_2.svg);
+  transform: scaleY(-1);
+}
+.voting-buttons button.vote-alert span.icon {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/8/80/OOjs_UI_icon_alert.svg);
+}
+.voting-buttons h3 {
+  margin: 0;
 }
 
 html {
@@ -580,6 +629,10 @@ body.night {
 }
 .btn-discord span {
   background: #5165F6;
+}
+
+.btn-voting span {
+  background: #047848;
 }
 
 .btn-recommendations span {
@@ -785,6 +838,14 @@ body.night .box {
   line-height: 36px;
   font-weight: bold;
   text-shadow: 0 1px 2px black;
+}
+.focus-date .focus-date-side h2 {
+  margin-top: 0;
+}
+.focus-date .focus-date-side p {
+  font-size: 16px;
+  line-height: normal;
+  margin: 2px 0 8px 0;
 }
 
 #about {

@@ -85,6 +85,7 @@ figure.series--right {
 
       figcaption {
         padding: 20px;
+        padding-right: 40px;
 
         h3 {
           font-size: 26px;
@@ -234,7 +235,7 @@ figure.series--right {
       @include responsive.medium-large {
         grid-column: 1 / 3;
         .rating-img {
-          right: 272px;
+          right: 282px;
         }
       }
     }
@@ -278,5 +279,72 @@ figure.series--right {
         }
       }
     }
+  }
+}
+
+/* Voting */
+
+.voting-buttons {
+  $size: 50px;
+
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  margin: 17px 0;
+  align-items: center;
+
+  button {
+    min-width: $size;
+    height: $size;
+    padding: 0;
+
+    border: 0 none;
+    border-radius: $size;
+    background: white;
+    box-shadow: 0 2px 4px black;
+
+
+    cursor: pointer;
+    span {
+      display: inline-block;
+      height: $size;
+      padding: 0 20px 0 4px;
+      line-height: $size;
+
+      font-size: 24px;
+      font-weight: bold;
+      vertical-align: top;
+    }
+
+    span.icon {
+      width: $size;
+      padding: 0;
+      background-size: $size * 0.6;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    &.vote-up {
+      span.icon {
+        background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/57/Thumb_up_icon_2.svg);
+      }
+    }
+
+    &.vote-down {
+      span.icon {
+        background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/57/Thumb_up_icon_2.svg);
+        transform: scaleY(-1);
+      }
+    }
+
+    &.vote-alert {
+      span.icon {
+        background-image: url(https://upload.wikimedia.org/wikipedia/commons/8/80/OOjs_UI_icon_alert.svg);
+      }
+    }
+  }
+
+  h3 {
+    margin: 0;
   }
 }

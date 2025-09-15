@@ -18,17 +18,6 @@
   <meta http-equiv="last-modified" content="{{lastModified}}">
   {{#if noindex}}<meta name="robots" content="noindex">{{/if}}
 
-<!-- Twitter universal website tag code -->
-<script>
-!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
-},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='//static.ads-twitter.com/uwt.js',
-a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
-// Insert Twitter Pixel ID and Standard Event data below
-twq('init','o898i');
-twq('track','PageView');
-</script>
-<!-- End Twitter universal website tag code -->
-
 <script>
   var isHome = true;
   var isRecommendations = false;
@@ -43,8 +32,6 @@ twq('track','PageView');
 
 <nav id='section-social'>
 <a class='btn btn-mail' href='mailto:marcus@basingstokeanimesociety.com'><i></i><span>Mail</span></a>
-<a class='btn btn-twitter' href='https://twitter.com/BasingAnime' target="_blank"><i></i><span>Twitter</span></a>
-<a class='btn btn-fb' href='https://www.facebook.com/groups/basingstokeanimesociety/' target="_blank"><i></i><span>Facebook</span></a>
 <a class='btn btn-discord' href='https://discord.gg/sypjyaA' target="_blank"><i></i><span>Discord</span></a>
 </nav>
 
@@ -233,16 +220,6 @@ twq('track','PageView');
     </article>
     {{/each}}
   </div>
-
-  <div id='twitter-box'>
-  <a class="twitter-timeline" data-lang="en"
-    data-width="670" data-height="700"
-    href="https://twitter.com/BasingAnime?ref_src=twsrc%5Etfw"
-    data-chrome="noheader nofooter transparent"
-
-    data-tweet-limit="{{ maxTweets }}"
-    ></a>
-  </div>
 </section>
 </div>
 
@@ -260,5 +237,4 @@ twq('track','PageView');
 </aside>
 
 <script src="script.js?ver={{ scriptVersion }}"></script>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>

@@ -29,8 +29,6 @@
 
 <nav id='section-social'>
 <a class='btn btn-mail' href='mailto:marcus@basingstokeanimesociety.com'><i></i><span>Mail</span></a>
-<a class='btn btn-twitter' href='https://twitter.com/BasingAnime' target="_blank"><i></i><span>Twitter</span></a>
-<a class='btn btn-fb' href='https://www.facebook.com/groups/basingstokeanimesociety/' target="_blank"><i></i><span>Facebook</span></a>
 <a class='btn btn-discord' href='https://discord.gg/sypjyaA' target="_blank"><i></i><span>Discord</span></a>
 </nav>
 
@@ -113,5 +111,4 @@
 </aside>
 
 <script src="script.js"></script>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
