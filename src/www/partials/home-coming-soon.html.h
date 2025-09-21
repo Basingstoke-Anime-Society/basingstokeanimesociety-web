@@ -31,7 +31,7 @@
   <div>
     <div class="box box--button">
       <h2>Anime Selection</h2>
-      <p>Help us decide what to show next!</p>
+      <p>Help us decide what to show in the future.</p>
       <a class='btn btn-voting' href='voting.html'><span>Vote</span></a>
     </div>
 

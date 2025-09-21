@@ -130,15 +130,6 @@
   </div>
 </section>
 
-<!-- <section id="section-voting">
-  <h2 class="underline">Voting</h2>
-  <div class="box box--button">
-    <h2>Anime Voting</h2>
-    <p>Help us decide what to show next.</p>
-    <a class='btn btn-voting' href='voting.html'><span>Voting</span></a>
-  </div>
-</section> -->
-
 <nav class='tabs'>
 <a class='tab tab--show' data-tab='coming-soon'>Coming Soon</a>
 <a class='tab' data-tab='news'>News</a>

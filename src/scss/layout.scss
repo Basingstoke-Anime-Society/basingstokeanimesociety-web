@@ -54,3 +54,14 @@ $series-height: 180px;
   }
 }
 
+.reveal {
+  display: none;
+
+  &.reveal--show {
+    display: block;
+  }
+
+  &.reveal-alert {
+    grid-column: 1/3;
+  }
+}

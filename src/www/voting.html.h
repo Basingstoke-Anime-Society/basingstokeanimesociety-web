@@ -106,6 +106,27 @@
     <img class="series-picture" src="images/series/dororo.png">
   </figure>
 
+  <section id="reveal-alert-dororo" class="reveal reveal-alert box">
+    <h2>This is inappropriate because:</h2>
+    <p><label for="alert-u18">
+      <input type="checkbox" autocomplete="off" name="u18" id="alert-u18">
+      It has, or should have, an 18 rating</label></p>
+    <p><label for="alert-fanservice">
+      <input type="checkbox" autocomplete="off" name="fanservice" id="alert-fanservice">
+      It has inappropriate nudity or sexual content</label></p>
+    <p><label for="alert-violence">
+      <input type="checkbox" autocomplete="off" name="violence" id="alert-violence">
+      It has excessive violence, injury or gore</label></p>
+    <p><label for="alert-politics">
+      <input type="checkbox" autocomplete="off" name="politics" id="alert-politics">
+      It expresses political views that are unacceptable (eg fascism, homophobia etc)</label></p>
+    <p><label for="alert-other">
+      <input type="checkbox" autocomplete="off" name="other" id="alert-other">
+      Other</label></p>
+    <textarea name="alert-details" rows="5" cols="60"></textarea>
+    <p>Select all that apply. <input type="submit" value="Confirm"></p>
+  </section>
+
   <figure class="series--right series--large">
     <figcaption>
       <h3>Ameku M.D.: Doctor Detective</h3>

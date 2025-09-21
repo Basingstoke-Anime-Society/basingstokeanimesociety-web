@@ -4,6 +4,7 @@
 {{> home_js }}
 {{> recommendations_js }}
 {{> history_js }}
+{{> voting_js }}
 
 // select a background image
 function selectBackground() {
@@ -48,6 +49,8 @@ window.onload = function () {
   if (isHistory) {
     setupHistory();
   }
+
+  setupVoting();
 
   setupSlideshow();
   setupTabs(true);
