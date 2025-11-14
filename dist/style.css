@@ -103,6 +103,7 @@ a.pick.pick--show {
 }
 
 time {
+  position: relative;
   background: white;
   width: 54px;
   height: 54px;
@@ -139,6 +140,17 @@ time .time__special {
   bottom: -5px;
   border: 2px solid #a2f8ad;
   border-radius: 5px;
+}
+time:after {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  border-radius: 3px;
+  background: linear-gradient(155deg, rgba(0, 0, 0, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.3) 100%);
 }
 
 time.time--event, .event-anime time {
