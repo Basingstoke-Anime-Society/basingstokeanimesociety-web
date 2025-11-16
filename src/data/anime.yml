@@ -250,6 +250,15 @@ slot1:
     rating: 15
     count: 12
 
+  - from: 2026-02-17
+    name: "Vivy -Fluorite Eye's Song"
+    picture: vivy
+    count: 13
+    rating: 15
+    episodes:
+      - episode: 7
+        show: single
+
 slot2:
   - from: 2019-01-08
     name: Hunter &times; Hunter
@@ -483,6 +492,15 @@ slot2:
     count: 14
     rating: pg
     genre: [ "Isekai", "Slice of life" ]
+
+  - from: 2026-02-24
+    name: "Girls Band Cry"
+    picture: girls-band-cry
+    count: 13
+    rating: 15
+    episodes:
+      - episode: 9
+        show: single
 
 slot3:
   - from: 2020-02-18
@@ -783,6 +801,13 @@ slot3:
     count: 12
     rating: 12
     genre: [ "Isekai", "Adventure", "Comedy" ]
+
+  - from: 2026-02-17
+    name: "The Dangers in My Heart"
+    picture: dangers-in-my-heart
+    count: 12
+    rating: pg
+    genre: [ "Romance", "Slice of life" ]
 
 movies:
   - name: "Konosuba - Legend of Crimson"
