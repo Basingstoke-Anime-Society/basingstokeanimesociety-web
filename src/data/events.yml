@@ -458,11 +458,80 @@ events:
     venue: Dice Tower
     time: 6pm
 
+  - name: No Nostalgia Stream
+    date: 2025-12-22
+    class: skip
+    hide: true
   - name: No Meeting
     date: 2025-12-23
     class: skip
+  - name: No Nostalgia Stream
+    date: 2025-12-29
+    class: skip
+    hide: true
   - name: No Meeting
     date: 2025-12-30
     class: skip
 
   # 2026
+
+  - name: Board Games
+    date: 2026-01-08
+    class: social
+    venue: Dice Tower
+    time: 6pm
+  - name: Board Games
+    date: 2026-02-12
+    class: social
+    venue: Dice Tower
+    time: 6pm
+  - name: Board Games
+    date: 2026-03-12
+    class: social
+    venue: Dice Tower
+    time: 6pm
+  - name: Board Games
+    date: 2026-04-09
+    class: social
+    venue: Dice Tower
+    time: 6pm
+  - name: Board Games
+    date: 2026-05-14
+    class: social
+    venue: Dice Tower
+    time: 6pm
+  - name: Board Games
+    date: 2026-06-11
+    class: social
+    venue: Dice Tower
+    time: 6pm
+  - name: Board Games
+    date: 2026-07-09
+    class: social
+    venue: Dice Tower
+    time: 6pm
+  - name: Board Games
+    date: 2026-08-13
+    class: social
+    venue: Dice Tower
+    time: 6pm
+  - name: Board Games
+    date: 2026-09-10
+    class: social
+    venue: Dice Tower
+    time: 6pm
+  - name: Board Games
+    date: 2026-10-08
+    class: social
+    venue: Dice Tower
+    time: 6pm
+  - name: Board Games
+    date: 2026-11-12
+    class: social
+    venue: Dice Tower
+    time: 6pm
+  - name: Board Games
+    date: 2026-12-10
+    class: social
+    venue: Dice Tower
+    time: 6pm
