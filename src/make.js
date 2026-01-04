@@ -294,12 +294,16 @@ basData.eventsByDate = _(events).groupBy(e => util.formatShortDate(e.date)).map(
   // }
   let special = false;
   let hide = true;
+  let mini = true;
   for (let ev of evs) {
     if (ev.special) {
       special = true;
     }
     if (!ev.hide) {
       hide = false;
+    }
+    if (!ev.mini) {
+      mini = false;
     }
   }
   
@@ -310,6 +314,7 @@ basData.eventsByDate = _(events).groupBy(e => util.formatShortDate(e.date)).map(
     day: evs[0].day,
     weekday: evs[0].weekday,
     year: evs[0].year,
+    mini: mini,
     class: cls,
     events: evs,
     special: special,

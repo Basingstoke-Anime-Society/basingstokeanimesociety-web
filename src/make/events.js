@@ -22,6 +22,7 @@ function expandEventDate(date, time) {
     shortWeekday: util.shortWeekday(date),
     day: date.getDate(),
     month: util.formatShortMonth(date),
+    longMonth: util.formatLongMonth(date),
     year: util.formatYear(date),
   }
 }
@@ -83,9 +84,10 @@ function nostalgiaMondayEvents(skipDates) {
       ...expandEventDate(date, "7pm"),
       name: 'Nostalgia Monday',
       class: 'online',
+      // mini: true,
       venue: 'Discord',
       address: '',
-      hide: true,
+      // hide: true,
     }
     if (_.has(skipDates, event.shortDate)) {
       console.log("Skipping event:", event.shortDate);

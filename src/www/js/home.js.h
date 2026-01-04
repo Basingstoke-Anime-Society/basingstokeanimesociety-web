@@ -27,7 +27,7 @@ function formatEventDateTime(event, name, tagline) {
     <span class='year'>${event.year}</span>
   </time>
   <div class='focus-date-side'>
-    <span class='next-social-title'>${name}</span>
+    <span class='next-event-title'>${name}</span>
     <br>${tagline}
   </div>`;
 }
@@ -65,7 +65,8 @@ function setupHomeNextMeeting(events) {
       <span class='year'>${nextMeeting.year}</span>
     </time>
     <div class='next-meeting-side focus-date-side'>
-      ${nextMeeting.weekday}<br>${nextMeeting.time}
+      <span class="next-event-title">${nextMeeting.name}</span><br>
+      ${nextMeeting.weekday} ${nextMeeting.time}
     </div>`;
   // document.getElementById('next-meeting-title').innerHTML = (nextEvent.name == 'Anime Society Meeting' ? '' : nextEvent.name);
   if (document.getElementById('next-meeting-venue')) {
@@ -164,31 +165,23 @@ function excludeSeries(items, exclude) {
 }
 
 function setupHomeComingSoon() {
-  // var rowCutoffs = {1: 2, 2: 5, 3: 8, 4: 11};
-  // function findCutoff(items, maxRow) {
-  //   for (var row = maxRow; row > 1; row--) {
-  //     var cutoff = rowCutoffs[row];
-  //     if (items >= cutoff)
-  //       return cutoff;
-  //   }
-  //   return rowCutoffs[1];
-  // }
-
   comingSoon = futureN(comingSoon, 16);
   comingSoon = excludeSeries(comingSoon, [currentSlot1, currentSlot2, currentSlot3]);
   comingSoon = futureN(comingSoon, 12);
 
   var comingSoonHTML = '';
+  let lastMonth = '';
   for (let item of comingSoon) {
     if (item.noCalendar)
       continue;
-    var isMovie
     var html = template_series(item, {
       isNew: true,
+      isNewMonth: item.month != lastMonth,
       showDate: true,
       showRating: true,
       large: item.movie
     });
+    lastMonth = item.month;
     comingSoonHTML = comingSoonHTML + html;
   }
   document.getElementById('coming-soon').innerHTML = comingSoonHTML;
@@ -209,7 +202,7 @@ function setupHomeEventsList(futureEvents) {
     }
 
     var html = 
-      `<article id='upcoming-${event.date}' class='event event-${event.class}'>
+      `<article id='upcoming-${event.date}' class='event event-${event.class}${event.mini ? ' event-mini' : ''}'>
         <time datetime='${event.date}'>
           <span class='day'>${event.day}</span>
           <span class='month'>${event.month}</span>

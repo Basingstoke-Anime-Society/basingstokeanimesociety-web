@@ -260,6 +260,19 @@ slot1:
       - episode: 7
         show: single
 
+  - from: 2026-04-07
+    name: "Ameku M.D."
+    picture: ameku
+    rating: 12
+    count: 12
+
+  - from: 2026-05-19
+    name: "Rage of Bahamut: Genesis"
+    picture: rage-of-bahamut
+    rating: 15
+    count: 12
+
+
 slot2:
   - from: 2019-01-08
     name: Hunter &times; Hunter
@@ -503,6 +516,14 @@ slot2:
     episodes:
       - episode: 9
         show: single
+
+  - from: 2026-04-14
+    name: "To Your Eternity S2"
+    picture: to-your-eternity
+    count: 20
+    genre: [ "Mystery", "Action", "Fantasy" ]
+    rating: 15
+
 
 slot3:
   - from: 2020-02-18
@@ -811,6 +832,24 @@ slot3:
     count: 12
     rating: pg
     genre: [ "Romance", "Slice of life" ]
+
+  - from: 2026-03-31
+    name: "Spy &times; Family S3"
+    picture: spy-x-family
+    rating: "15"
+    genre: [ "Comedy", "Action", "Adventure" ]
+    count: 13
+    episodes:
+      - episode: 1
+        show: single
+
+  - from: 2026-05-19
+    name: "Campfire Cooking in Another World With My Absurd Skill"
+    picture: campfire-cooking
+    rating: 12
+    genre: [ "Isekai", "Adventure", "Slice of life" ]
+    count: 12
+
 
 movies:
   - name: "Konosuba - Legend of Crimson"

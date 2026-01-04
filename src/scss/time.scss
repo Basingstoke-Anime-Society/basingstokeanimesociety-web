@@ -57,13 +57,29 @@ time {
 
     background: linear-gradient(155deg, rgba(0,0,0,0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.3) 100%);
   }
+
+  .event-mini & {
+    width: 38px;
+    height: 38px;
+
+    .day {
+      font-size: 22px;
+      line-height: 14px;
+    }
+
+    .month {
+      font-size: 10px;
+    }
+  }
 }
 
 // time.time--large,
 
 // colours
 time.time--event, .event-anime time {
-  background: #a2d7f8;
+  // background: #a2d7f8;
+  background: #f0b050;
+  // background: #C0882D;
 }
 
 time.time--movie, .event-movie time {

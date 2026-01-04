@@ -373,22 +373,22 @@ a#home-link {
   }
 }
 
-#section-next-meeting, #section-next-social {
+#section-next-meeting, #section-next-social, #section-next-online {
   position: relative;
-
-  // h2 {
-  //   margin-top: 0.6em;
-  //   margin-bottom: 3px;
-  //   color: #f8dda2;
-  // }
 
   h3 {
     margin-top: 1em;
   }
+}
 
-  .next-social-title {
-    color: #a2f8ad;
-  }
+#section-next-meeting .next-event-title {
+  color: #f0b050;
+}
+#section-next-social .next-event-title {
+  color: #a2f8ad;
+}
+#section-next-online .next-event-title {
+  color: #97abf3;
 }
 
 .focus-date {
@@ -848,6 +848,10 @@ article {
     .event-detail h3 {
       color: #a2d7f8;
     }
+    .event-detail h3:first-child {
+      color: #f0b050;
+      // color: #C0882D;
+    }
   }
 
   &.event-social {
@@ -868,9 +872,24 @@ article {
     }
   }
 
+  &.event-online {
+    .event-detail h3 {
+      color: #97abf3;
+    }
+  }
+
   &.event-skip {
     time span {
       color: #b00;
+    }
+  }
+
+  &.event-mini {
+    padding-left: 50px;
+
+    .event-detail h3 {
+      font-size: 18px;
+      line-height: 18px;
     }
   }
 

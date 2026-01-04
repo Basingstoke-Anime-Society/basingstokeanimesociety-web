@@ -58,7 +58,7 @@
         <span class='month'>{{ nextMainEvent.month }}</span>
         <span class='year'>{{ nextMainEvent.year }}</span>
       </time>
-      <div class="next-meeting-side focus-date-side">{{ nextMainEvent.weekday }}<br>{{ nextMainEvent.time }}</div>
+      <div class="next-meeting-side focus-date-side"><span class="next-event-title">{{ nextMainEvent.name }}</span><br>{{ nextMainEvent.weekday }} {{ nextMainEvent.time }}</div>
     </article>
 
     <div style='position: relative'>
@@ -85,7 +85,7 @@
         <span class='month'>{{ nextSocial.month }}</span>
         <span class='year'>{{ nextSocial.year }}</span>
       </time>
-      <div class="next-social-side focus-date-side">{{ nextSocial.name }}<br></div>
+      <div class="next-social-side focus-date-side"><span class="next-event-title">{{ nextSocial.name }}</span><br></div>
     </article>
 
     <h3>Venue: <span id="next-social-venue">{{ nextSocial.venue }}</span></h3>
@@ -99,7 +99,7 @@
         <span class='month'>{{ nextOnline.month }}</span>
         <span class='year'>{{ nextOnline.year }}</span>
       </time>
-      <div class="next-online-side focus-date-side">{{ nextOnline.name }}<br>{{ nextOnline.time }}</div>
+      <div class="next-online-side focus-date-side"><span class="next-event-title">{{ nextOnline.name }}</span><br>{{ nextOnline.time }}</div>
     </article>
 
     <!-- <p class='p--icon'><img class="rating-img rating-18 icon" src="images/rating/18.svg">Age requirement</p> -->

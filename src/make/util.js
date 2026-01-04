@@ -18,7 +18,7 @@ function readData() {
   basData = {
     ...basData,
     maxEvents: 24,
-    windowEvents: 40,
+    windowEvents: 120,
     maxTweets: 10,
   };
 
@@ -36,6 +36,11 @@ function formatYear(date) {
 let shortMonthFormat = new Intl.DateTimeFormat('en-GB', { month: 'short' });
 function formatShortMonth(date) {
   return shortMonthFormat.format(date);
+}
+
+let longMonthFormat = new Intl.DateTimeFormat('en-GB', { month: 'long' });
+function formatLongMonth(date) {
+  return longMonthFormat.format(date);
 }
 
 function padNumber(num, digits) {
@@ -250,6 +255,7 @@ function expandDate(target, date = null, time = null, leeway = 0) {
 
   target.day = date.getDate();
   target.month = formatShortMonth(date);
+  target.longMonth = formatLongMonth(date);
   target.weekday = weekday(date);
   target.year = formatYear(date);
   return target;
@@ -273,6 +279,7 @@ module.exports = {
   formatDay,
   formatYear,
   formatShortMonth,
+  formatLongMonth,
   formatShortDate,
   formatMediumDate,
   formatLongDate,

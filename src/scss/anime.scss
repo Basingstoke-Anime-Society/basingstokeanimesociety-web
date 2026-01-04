@@ -3,6 +3,18 @@
 
 $series-height: 180px;
 
+.divider {
+  grid-column: 1 / span 2;
+  margin-bottom: -0.5em;
+
+  span {
+    color: white;
+    font-weight: bold;
+    font-size: 19px;
+    text-shadow: 0 1px 1px black;
+  }
+}
+
 figure.series--right {
   position: relative;
   background: rgba(40, 60, 120, 0.4);

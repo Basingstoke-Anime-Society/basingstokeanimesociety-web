@@ -4,6 +4,7 @@ function template_series(series, opts = {}) {
   opts = {
     large: false,
     isNew: false,
+    isNewMonth: false,
     showDate: false,
     showRating: false,
     showTrailer: false,
@@ -20,7 +21,12 @@ function template_series(series, opts = {}) {
   let cls = (series.movie ? " movie" : "")+((opts.showDate || opts.showRating || opts.showGenres) ? " series--small-title" : "")+(opts.large ? " series--large" : "");
   let prefix = opts.prefix ? opts.prefix : (series.movie ? "Movie" : (opts.isNew ? "New series" : false));
 
-  return `<figure class="series--right ${cls}">
+  let divider = '';
+  if (opts.isNewMonth) {
+    divider = `<div class='divider'><span>${series.longMonth}</span></div>`;
+  }
+
+  return `${divider}<figure class="series--right ${cls}">
     	<figcaption>
         ${prefix ? `<p class="series-ident">${prefix}</p>` : ''}
         <h3>${series.name}</h3>

@@ -152,9 +152,20 @@ time:after {
   border-radius: 3px;
   background: linear-gradient(155deg, rgba(0, 0, 0, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.3) 100%);
 }
+.event-mini time {
+  width: 38px;
+  height: 38px;
+}
+.event-mini time .day {
+  font-size: 22px;
+  line-height: 14px;
+}
+.event-mini time .month {
+  font-size: 10px;
+}
 
 time.time--event, .event-anime time {
-  background: #a2d7f8;
+  background: #f0b050;
 }
 
 time.time--movie, .event-movie time {
@@ -231,6 +242,17 @@ time.time--social, .event-social time {
     margin-top: 1em !important;
   }
 }
+.divider {
+  grid-column: 1/span 2;
+  margin-bottom: -0.5em;
+}
+.divider span {
+  color: white;
+  font-weight: bold;
+  font-size: 19px;
+  text-shadow: 0 1px 1px black;
+}
+
 figure.series--right {
   position: relative;
   background: rgba(40, 60, 120, 0.4);
@@ -771,14 +793,23 @@ body.night .box {
   font-weight: 600;
 }
 
-#section-next-meeting, #section-next-social {
+#section-next-meeting, #section-next-social, #section-next-online {
   position: relative;
 }
-#section-next-meeting h3, #section-next-social h3 {
+#section-next-meeting h3, #section-next-social h3, #section-next-online h3 {
   margin-top: 1em;
 }
-#section-next-meeting .next-social-title, #section-next-social .next-social-title {
+
+#section-next-meeting .next-event-title {
+  color: #f0b050;
+}
+
+#section-next-social .next-event-title {
   color: #a2f8ad;
+}
+
+#section-next-online .next-event-title {
+  color: #97abf3;
 }
 
 .focus-date {
@@ -1171,6 +1202,9 @@ article a {
 article.event-anime .event-detail h3 {
   color: #a2d7f8;
 }
+article.event-anime .event-detail h3:first-child {
+  color: #f0b050;
+}
 article.event-social time .time__special {
   border-color: #a2f8ad;
 }
@@ -1180,8 +1214,18 @@ article.event-social .event-detail h3 {
 article.event-cinema .event-detail h3 {
   color: #f8b3a2;
 }
+article.event-online .event-detail h3 {
+  color: #97abf3;
+}
 article.event-skip time span {
   color: #b00;
+}
+article.event-mini {
+  padding-left: 50px;
+}
+article.event-mini .event-detail h3 {
+  font-size: 18px;
+  line-height: 18px;
 }
 article img.landscape {
   max-width: 600px;
