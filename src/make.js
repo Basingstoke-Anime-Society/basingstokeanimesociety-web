@@ -321,7 +321,6 @@ basData.eventsByDate = _(events).groupBy(e => util.formatShortDate(e.date)).map(
     hide: hide
   };
 }).values().sortBy('shortDate').value().slice(0, basData.windowEvents);
-// console.log(JSON.stringify(basData.eventsByDate, null, 2));
 
 // put upcoming events at the top
 let mainEvents = _.filter(events, (event) => event.class == 'anime')

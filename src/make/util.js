@@ -17,7 +17,8 @@ function readData() {
 
   basData = {
     ...basData,
-    maxEvents: 24,
+    maxEvents: 12,
+    moreEvents: 24,
     windowEvents: 120,
     maxTweets: 10,
   };

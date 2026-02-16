@@ -927,6 +927,24 @@ article {
   }
 }
 
+#events-list--show-more {
+  border: 0 none;
+  padding: 0.4rem 1rem;
+  border-radius: 2px;
+  font-weight: bold;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.7);
+  cursor: pointer;
+  color: #127;
+}
+
+.events-list--more {
+  display: none;
+
+  &.reveal {
+    display: block;
+  }
+}
+
 article.event {
   margin: 1em 0 1.5em 0;
   clear: left;

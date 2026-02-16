@@ -9,7 +9,7 @@ function setupHome() {
   // adjust the events list
   let futureEvents = events.filter(function (event) {
     return Date.parse(event.date) > yesterday;
-  }).slice(0, {{ maxEvents }});
+  });
 
   setupHomeNextMeeting(futureEvents);
   setupHomeNowShowing();
@@ -194,61 +194,21 @@ function setupHomeComingSoon() {
 }
 
 function setupHomeEventsList(futureEvents) {
-  var eventsHTML = '';
-  for (var event of futureEvents) {
-    let partEvents = event.events.filter((evt) => !evt.hide);
-    if (partEvents.length == 0) {
-      continue;
-    }
+  let events1 = futureEvents.slice(0, {{ maxEvents }});
+  let events2 = futureEvents.slice({{ maxEvents }}, {{ moreEvents }});
 
-    var html = 
-      `<article id='upcoming-${event.date}' class='event event-${event.class}${event.mini ? ' event-mini' : ''}'>
-        <time datetime='${event.date}'>
-          <span class='day'>${event.day}</span>
-          <span class='month'>${event.month}</span>
-          ${event.special ? "<span class='time__special'></span>" : ""}
-        </time>\n`;
-    for (ev of partEvents) {
-      var time = false;
-      var a = "";
-      var _a = "";
-      if (ev.hasOwnProperty("link")) {
-        a = "<a href='"+ev.link+"'>";
-        _a = "</a>";
-      }
-      html = html + "<div class='event-detail event-detail-"+ev.class+"'>";
-      if (ev.hasOwnProperty("picture") && ev.picture != "") {
-        html = html + "<img src='images/series/"+ev.picture+".png'>";
-      }
-      if (ev.hasOwnProperty("prename") && ev.prename != "") {
-        html = html + "<p class='series-ident'>"+ev.prename+"</p>";
-      }
-      html = html + "<h3>"+ev.name+"</h3>\n";
-      if (ev.hasOwnProperty("time") || (ev.hasOwnProperty("venue") && ev.venue)) {
-        html = html+"<p>"+a;
-        if (ev.hasOwnProperty("venue") && ev.venue) {
-          html = html + ev.venue;
-          if (ev.hasOwnProperty("time")) {
-            html = html + ", ";
-            if (ev.hasOwnProperty("shortWeekday")) html = html + ev.shortWeekday + " ";
-            html = html + ev.time;
-          }
-        } else {
-          if (ev.hasOwnProperty("shortWeekday")) html = html + ev.shortWeekday + " ";
-          html = html+ev.time;
-        }
-
-        html = html+_a+"</p>\n";
-      }
-      if (ev.price) {
-        html = html + "<p>Club fee: "+ev.price+"</p>";
-      }
-      html = html+"</div>";
-    };
-    html = html + "</article>\n";
-    eventsHTML = eventsHTML + html;
-  }
+  var eventsHTML = `${events1.map((event) => template_event(event)).join('')}
+    <p><button id="events-list--show-more">Show More</button></p>
+    <div class="events-list--more">
+      ${events2.map((event) => template_event(event)).join('')}
+    </div>`;
   document.getElementById('events-list').innerHTML = eventsHTML;
+
+  document.getElementById("events-list--show-more").addEventListener('click', (evt) => {
+    for (let section of document.getElementsByClassName("events-list--more")) {
+      section.classList.add('reveal');
+    }
+  });
 }
 
 function setupHomeNews() {

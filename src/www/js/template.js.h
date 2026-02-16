@@ -65,7 +65,46 @@ function template_series(series, opts = {}) {
 }
 
 function template_event(event) {
+  let partEvents = event.events.filter((evt) => !evt.hide);
+  if (partEvents.length == 0) {
+    return;
+  }
 
+  return `<article id="upcoming-${event.date}" class="event event-${event.class}${event.mini ? ' event-mini' : ''}">
+    <time datetime="${event.date}">
+      <span class="day">${event.day}</span>
+      <span class="month">${event.month}</span>
+      ${event.special ? '<span class="time__special"></span>' : ''}
+    </time>
+
+    ${partEvents.map((ev) => {
+      var time = false;
+      var a = "";
+      var _a = "";
+      if (ev.hasOwnProperty("link")) {
+        a = `<a href="${ev.link}">`;
+        _a = '</a>';
+      }
+
+      let eventline = '';
+      if (ev.hasOwnProperty("time") || (ev.hasOwnProperty("venue") && ev.venue)) {
+        eventline = `<p>${a}
+            ${(ev.hasOwnProperty("venue") && ev.venue) ? `${ev.venue}, ` : ''}
+            ${(ev.hasOwnProperty("shortWeekday")) ? ev.shortWeekday : ''}
+            ${ev.time}
+          ${_a}</p>`;
+      }
+      return `
+        <div class='event-detail event-detail-${ev.class}'>
+          ${(ev.hasOwnProperty("picture") && ev.picture != "") ? `<img src="images/series/${ev.picture}.png">` : ''}
+          ${(ev.hasOwnProperty("prename") && ev.prename != "") ? `<p class="series-ident">${ev.prename}</p>` : ''}
+          <h3>${ev.name}</h3>
+          ${eventline}
+          ${(ev.price) ? `<p>Club fee: ${ev.price}</p>` : ''}
+        </div>
+      `;
+    }).join('')}
+  </article>`;
 }
 
 function template_date(item, opts = {}) {
