@@ -539,6 +539,8 @@ slot2:
         before: 1
       - episode: "14.5 part 2"
         before: 1
+      - episode: 1
+        delayto: 2026-06-30
 
   - from: 2026-08-11
     name: "Insomniacs After School"
@@ -780,8 +782,12 @@ slot3:
     count: 12
     rating: 12
     episodes:
-      - episode: 9
-        delayto: 2025-01-07
+  - from: 2024-09-03
+    name: "Aharen is Indecipherable"
+    picture: aharen-san
+    rating: 12
+    genre: [ "Comedy" ]
+    count: 12
 
   - from: 2025-01-21
     name: "BOFURI S2"
@@ -872,6 +878,13 @@ slot3:
     picture: campfire-cooking
     rating: 12
     genre: [ "Isekai", "Adventure", "Slice of life" ]
+    count: 12
+
+  - from: 2026-06-30
+    name: "Aharen is Indecipherable S2"
+    picture: aharen-san
+    rating: 12
+    genre: [ "Comedy" ]
     count: 12
 
   - from: 2026-08-11
