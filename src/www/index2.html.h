@@ -28,20 +28,18 @@
 </head>
 <body class="day home-page">
 
-<div id='section-logo'>
-<img src='images/logo.png' id='logo'>
-</div>
 
 <nav id='section-social'>
 <a class='btn btn-mail' href='mailto:marcus@basingstokeanimesociety.com'><i></i><span>Mail</span></a>
-<!-- <a class='btn btn-twitter-broken' href='https://twitter.com/BasingAnime' target="_blank"><i></i><span>Twitter</span></a> -->
-<!-- <a class='btn btn-fb' href='https://www.facebook.com/groups/basingstokeanimesociety/' target="_blank"><i></i><span>Facebook</span></a> -->
 <a class='btn btn-discord' href='https://discord.gg/sypjyaA' target="_blank"><i></i><span>Discord</span></a>
 </nav>
 
 <main>
 
-<h1 id='main-title'>Basingstoke Anime Society</h1>
+<div id='section-logo'>
+  <h1 id='main-title'>Basingstoke Anime Society</h1>
+  <img src='images/newlogo.png' id='logo'>
+</div>
 
 <header id="header">
 <div>
