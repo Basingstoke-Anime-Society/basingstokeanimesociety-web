@@ -61,8 +61,6 @@
       <div class="next-meeting-side focus-date-side"><span class="next-event-title">{{ nextMainEvent.name }}</span><br>{{ nextMainEvent.weekday }} {{ nextMainEvent.time }}</div>
     </article>
 
-    <div style='position: relative'>
-
     <div id='about'>
       <button class='btn btn-where-when' onclick="showMap()"><i></i><span>Show Map</span></button>
 
