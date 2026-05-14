@@ -15,12 +15,16 @@ function selectBackground() {
     var bgNum = 1+Math.floor(Math.random() * (isDay ? DAY_LIMIT : NIGHT_LIMIT));
     var bg = (isDay ? "day-" : "night-")+bgNum;
 
+    let logoImg = document.getElementById('logo');
+
     if (isDay) {
       document.body.classList.add('day');
       document.body.classList.remove('night');
+      logoImg.setAttribute('src', 'images/newlogo.png');
     } else {
       document.body.classList.add('day');
       document.body.classList.remove('night');
+      logoImg.setAttribute('src', 'images/newlogo-white.png');
     }
 
     document.body.setAttribute('bg', bg);
