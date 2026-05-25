@@ -796,20 +796,29 @@ body.night .box {
 #section-next-meeting, #section-next-social, #section-next-online {
   position: relative;
 }
-#section-next-meeting h3, #section-next-social h3, #section-next-online h3 {
-  margin-top: 1em;
+#section-next-meeting .center, #section-next-social .center, #section-next-online .center {
+  text-align: center;
 }
 
-#section-next-meeting .next-event-title {
+#section-next-meeting .event-title {
   color: #f0b050;
 }
-
-#section-next-social .next-event-title {
-  color: #a2f8ad;
+#section-next-meeting .focus-date time .year {
+  background: #f0b050;
 }
 
-#section-next-online .next-event-title {
+#section-next-social .event-title {
+  color: #a2f8ad;
+}
+#section-next-social .focus-date time .year {
+  background: #a2f8ad;
+}
+
+#section-next-online .event-title {
   color: #97abf3;
+}
+#section-next-online .focus-date time .year {
+  background: #97abf3;
 }
 
 .focus-date {
@@ -833,13 +842,25 @@ body.night .box {
   font-size: 24px;
   line-height: 24px;
 }
+.focus-date time .year {
+  margin-bottom: -10px;
+  display: block;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 2px;
+  padding: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
 .focus-date .focus-date-side {
   padding-top: 4px;
   color: white;
-  font-size: 32px;
+  font-size: 24px;
   line-height: 36px;
   font-weight: bold;
   text-shadow: 0 1px 2px black;
+}
+.focus-date .focus-date-side .event-title {
+  font-size: 32px;
 }
 
 #about {

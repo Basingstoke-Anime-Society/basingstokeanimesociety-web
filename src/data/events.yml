@@ -510,6 +510,20 @@ events:
     class: social
     venue: The Tavern
     time: 6pm
+  - name: Crafternoon
+    date: 2026-06-13
+    class: social
+    venue: Willows Cafe
+    time: 12pm
+  - name: "Matinee: ?"
+    date: 2026-06-27
+    class: cinema
+    price: "£2"
+    time: 1pm
+    venue: "The White Hart"
+    # picture: "?"
+    rating: 15
+
   - name: Board Games
     date: 2026-07-09
     class: social
@@ -542,16 +556,16 @@ events:
     time: 6pm
 
   - name: No Nostalgia Stream
-    date: 2025-12-21
+    date: 2026-12-21
     class: skip
     hide: true
   - name: No Meeting
-    date: 2025-12-22
+    date: 2026-12-22
     class: skip
   - name: No Nostalgia Stream
-    date: 2025-12-28
+    date: 2026-12-28
     class: skip
     hide: true
   - name: No Meeting
-    date: 2025-12-29
+    date: 2026-12-29
     class: skip

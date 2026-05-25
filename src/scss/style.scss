@@ -376,19 +376,22 @@ a#home-link {
 #section-next-meeting, #section-next-social, #section-next-online {
   position: relative;
 
-  h3 {
-    margin-top: 1em;
+  .center {
+    text-align: center;
   }
 }
 
-#section-next-meeting .next-event-title {
-  color: #f0b050;
+#section-next-meeting {
+  .event-title { color: #f0b050; }
+  .focus-date time .year { background: #f0b050; }
 }
-#section-next-social .next-event-title {
-  color: #a2f8ad;
+#section-next-social {
+  .event-title { color: #a2f8ad; }
+  .focus-date time .year { background: #a2f8ad; }
 }
-#section-next-online .next-event-title {
-  color: #97abf3;
+#section-next-online {
+  .event-title { color: #97abf3; }
+  .focus-date time .year { background: #97abf3; }
 }
 
 .focus-date {
@@ -403,7 +406,6 @@ a#home-link {
     top: 0;
     height: 82px;
     width: 82px;
-    // background: linear-gradient(#faeed8, #f8dda2);
 
     .day {
       font-size: 46px;
@@ -413,15 +415,28 @@ a#home-link {
       font-size: 24px;
       line-height: 24px;
     }
+    .year {
+      margin-bottom: -10px;
+      display: block;
+      margin-left: 20px;
+      margin-right: 20px;
+      border-radius: 2px;
+      padding: 2px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
   }
 
   .focus-date-side {
     padding-top: 4px;
     color: white;
-    font-size: 32px;
+    font-size: 24px;
     line-height: 36px;
     font-weight: bold;
     text-shadow: 0 1px 2px black;
+
+    .event-title {
+      font-size: 32px;
+    }
   }
 }
 

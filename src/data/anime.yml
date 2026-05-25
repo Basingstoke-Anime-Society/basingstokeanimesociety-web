@@ -266,13 +266,13 @@ slot1:
     rating: 12
     count: 12
 
-  - from: 2026-05-19
+  - from: 2026-05-26
     name: "Rage of Bahamut: Genesis"
     picture: rage-of-bahamut
     rating: 15
     count: 12
 
-  - from: 2026-06-30
+  - from: 2026-07-07
     name: "Dororo"
     picture: dororo
     rating: 15
@@ -985,10 +985,11 @@ movies:
     rating: 15
     hide: true
 
+  # - name: "???"
+  #   date: 2026-06-27
+  #   time: 1pm
+  #   picture: ?
+  #   venue: "The White Hart"
+  #   rating: 15
+  #   hide: true
 
-  # - name: Your Name
-  #   date: 2021-12-14
-  #   time: 7pm
-  #   venue: "Discord"
-  #   picture: your-name
-  #   rating: 12

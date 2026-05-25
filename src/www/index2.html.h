@@ -58,7 +58,11 @@
         <span class='month'>{{ nextMainEvent.month }}</span>
         <span class='year'>{{ nextMainEvent.year }}</span>
       </time>
-      <div class="next-meeting-side focus-date-side"><span class="next-event-title">{{ nextMainEvent.name }}</span><br>{{ nextMainEvent.weekday }} {{ nextMainEvent.time }}</div>
+      <div class="next-meeting-side focus-date-side">
+        <span class="event-title">{{ nextMainEvent.name }}</span><br>
+        {{ nextMainEvent.weekday }} {{ nextMainEvent.time }}
+        <h3>Venue: <span>{{ nextMainEvent.venue }}</span></h3>
+      </div>
     </article>
 
     <div id='about'>
@@ -70,23 +74,26 @@
         <p class='p--icon'><img class="rating-img rating-18 icon" src="images/rating/18.svg">Age requirement</p>
       </div>
     </div>
+
+    <h3 class="center">⮟ Current anime ⮟</h3>
   </section>
 </div>
 
 <div>
   <section id='section-next-social' class='box'>
-    <h2>Next Social Event</h2>
+    <h2>Upcoming Social Events</h2>
+    <div id='upcoming-socials'>
+      <article id="next-social-date" class="focus-date event-social">
+        <time datetime="{{ nextSocial.date }}">
+          <span class='day'>{{ nextSocial.day }}</span>
+          <span class='month'>{{ nextSocial.month }}</span>
+          <span class='year'>{{ nextSocial.year }}</span>
+        </time>
+        <div class="next-social-side focus-date-side"><span class="event-title">{{ nextSocial.name }}</span><br></div>
+      </article>
 
-    <article id="next-social-date" class="focus-date event-social">
-      <time datetime="{{ nextSocial.date }}">
-        <span class='day'>{{ nextSocial.day }}</span>
-        <span class='month'>{{ nextSocial.month }}</span>
-        <span class='year'>{{ nextSocial.year }}</span>
-      </time>
-      <div class="next-social-side focus-date-side"><span class="next-event-title">{{ nextSocial.name }}</span><br></div>
-    </article>
-
-    <h3>Venue: <span id="next-social-venue">{{ nextSocial.venue }}</span></h3>
+      <h3>Venue: <span id="next-social-venue">{{ nextSocial.venue }}</span></h3>
+    </div>
   </section>
 
   <section id='section-next-online' class='box'>
@@ -97,7 +104,11 @@
         <span class='month'>{{ nextOnline.month }}</span>
         <span class='year'>{{ nextOnline.year }}</span>
       </time>
-      <div class="next-online-side focus-date-side"><span class="next-event-title">{{ nextOnline.name }}</span><br>{{ nextOnline.time }}</div>
+      <div class="next-online-side focus-date-side">
+        <span class="event-title">{{ nextOnline.name }}</span><br>
+        {{ nextOnline.weekday }} {{ nextOnline.time }}
+        <h3>On discord</h3>
+      </div>
     </article>
 
     <!-- <p class='p--icon'><img class="rating-img rating-18 icon" src="images/rating/18.svg">Age requirement</p> -->
