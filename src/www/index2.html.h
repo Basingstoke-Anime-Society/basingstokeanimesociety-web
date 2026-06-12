@@ -75,7 +75,7 @@
       </div>
     </div>
 
-    <h3 class="center">⮟ Current anime ⮟</h3>
+    <!-- <h3 class="center">⮟ Current anime ⮟</h3> -->
   </section>
 </div>
 
