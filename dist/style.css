@@ -845,11 +845,22 @@ body.night .box {
 .focus-date time .year {
   margin-bottom: -10px;
   display: block;
+  position: relative;
   margin-left: 20px;
   margin-right: 20px;
   border-radius: 2px;
   padding: 2px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 1px rgba(0, 0, 0, 0.3);
+}
+.focus-date time .year:after {
+  content: "";
+  position: absolute;
+  display: block;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  height: 51%;
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3));
 }
 .focus-date .focus-date-side {
   padding-top: 4px;
