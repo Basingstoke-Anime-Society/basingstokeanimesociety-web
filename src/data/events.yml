@@ -515,14 +515,16 @@ events:
     class: social
     venue: Willows Cafe
     time: 12pm
-  - name: "Matinee: ?"
+  - name: "Your Name"
     date: 2026-06-27
+    movie: true
     class: cinema
     price: "£2"
     time: 1pm
     venue: "The White Hart"
-    # picture: "?"
+    picture: your-name
     rating: 15
+    prename: "Matinee"
 
   - name: Board Games
     date: 2026-07-09

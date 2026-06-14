@@ -993,11 +993,11 @@ movies:
     rating: 15
     hide: true
 
-  # - name: "???"
-  #   date: 2026-06-27
-  #   time: 1pm
-  #   picture: ?
-  #   venue: "The White Hart"
-  #   rating: 15
-  #   hide: true
+  - name: "Your Name"
+    date: 2026-06-27
+    time: 1pm
+    picture: your-name
+    venue: "The White Hart"
+    rating: 15
+    hide: true
 
