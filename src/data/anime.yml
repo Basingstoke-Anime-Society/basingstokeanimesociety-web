@@ -558,6 +558,13 @@ slot2:
       - episode: 7
         show: single
 
+  - from: 2026-09-29
+    name: "Ascendance of a Bookworm S3"
+    picture: bookworm
+    count: 10
+    rating: pg
+    genre: [ "Isekai", "Slice of life" ]
+
 slot3:
   - from: 2020-02-18
     name: Kaguya-sama, Love is War
@@ -900,6 +907,14 @@ slot3:
     rating: 15
     genre: [ "Isekai", "Comedy", "Adventure" ]
     count: 12
+
+  - from: 2026-09-22
+    name: "Bartender: Glass of God"
+    picture: bartender
+    rating: 15
+    genre: [ "Slice of life" ]
+    count: 12
+
 
 movies:
   - name: "Konosuba - Legend of Crimson"
