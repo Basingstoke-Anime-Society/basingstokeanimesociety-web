@@ -256,6 +256,7 @@ slot1:
     picture: vivy
     count: 13
     rating: 15
+    genre: [ "Action", "Drama", "Sci fi" ]
     episodes:
       - episode: 7
         show: single
@@ -265,18 +266,21 @@ slot1:
     picture: ameku
     rating: 12
     count: 12
+    genre: [ "Mystery" ]
 
-  - from: 2026-05-19
+  - from: 2026-05-26
     name: "Rage of Bahamut: Genesis"
     picture: rage-of-bahamut
     rating: 15
     count: 12
+    genre: [ "Action", "Adventure", "Fantasy" ]
 
-  - from: 2026-06-30
+  - from: 2026-07-07
     name: "Dororo"
     picture: dororo
     rating: 15
     count: 24
+    genre: [ "Action", "Drama" ]
 
 slot2:
   - from: 2019-01-08
@@ -518,6 +522,7 @@ slot2:
     picture: girls-band-cry
     count: 13
     rating: 15
+    genre: [ "Music", "Drama" ]
     episodes:
       - episode: 9
         show: single
@@ -534,6 +539,7 @@ slot2:
     picture: bookworm
     count: 14
     rating: pg
+    genre: [ "Isekai", "Slice of life" ]
     episodes:
       - episode: "14.5 part 1"
         before: 1
@@ -547,9 +553,17 @@ slot2:
     picture: insomnia
     count: 13
     rating: 12
+    genre: [ "Romance", "Slice of life" ]
     episodes:
       - episode: 7
         show: single
+
+  - from: 2026-09-29
+    name: "Ascendance of a Bookworm S3"
+    picture: bookworm
+    count: 10
+    rating: pg
+    genre: [ "Isekai", "Slice of life" ]
 
 slot3:
   - from: 2020-02-18
@@ -891,7 +905,16 @@ slot3:
     name: "Handyman Saitou in Another World"
     picture: handyman-saitou
     rating: 15
+    genre: [ "Isekai", "Comedy", "Adventure" ]
     count: 12
+
+  - from: 2026-09-22
+    name: "Bartender: Glass of God"
+    picture: bartender
+    rating: 15
+    genre: [ "Slice of life" ]
+    count: 12
+
 
 movies:
   - name: "Konosuba - Legend of Crimson"
@@ -985,10 +1008,11 @@ movies:
     rating: 15
     hide: true
 
+  - name: "Your Name"
+    date: 2026-06-27
+    time: 1pm
+    picture: your-name
+    venue: "The White Hart"
+    rating: 15
+    hide: true
 
-  # - name: Your Name
-  #   date: 2021-12-14
-  #   time: 7pm
-  #   venue: "Discord"
-  #   picture: your-name
-  #   rating: 12

@@ -5,10 +5,13 @@ var currentSlot1, currentSlot2, currentSlot3;
 function setupHome() {
   var yesterday = new Date(Date.now());
   yesterday.setDate(yesterday.getDate() - 1);
+  var nearfuture = new Date(Date.now());
+  nearfuture.setDate(nearfuture.getDate() + 28);
 
   // adjust the events list
   let futureEvents = events.filter(function (event) {
-    return Date.parse(event.date) > yesterday;
+    let evtdate = Date.parse(event.date);
+    return evtdate > yesterday && evtdate < nearfuture;
   });
 
   setupHomeNextMeeting(futureEvents);
@@ -27,15 +30,16 @@ function formatEventDateTime(event, name, tagline) {
     <span class='year'>${event.year}</span>
   </time>
   <div class='focus-date-side'>
-    <span class='next-event-title'>${name}</span>
+    <span class='event-title'>${name}</span>
     <br>${tagline}
+    <h3>Venue: ${event.venue}</h3>
   </div>`;
 }
 
 function setupHomeNextMeeting(events) {
-  var meetings = [];
-  var social = [];
-  var online = [];
+  let meetings = [];
+  let social = [];
+  let online = [];
   for (var event of events) {
     for (ev of event.events) {
       switch (ev.class) {
@@ -59,16 +63,7 @@ function setupHomeNextMeeting(events) {
   var nextMeeting = meetings[0];
   
   document.getElementById('next-meeting-date').innerHTML = 
-    `<time datetime='${nextMeeting.date}'>
-      <span class='day'>${nextMeeting.day}</span>
-      <span class='month'>${nextMeeting.month}</span>
-      <span class='year'>${nextMeeting.year}</span>
-    </time>
-    <div class='next-meeting-side focus-date-side'>
-      <span class="next-event-title">${nextMeeting.name}</span><br>
-      ${nextMeeting.weekday} ${nextMeeting.time}
-    </div>`;
-  // document.getElementById('next-meeting-title').innerHTML = (nextEvent.name == 'Anime Society Meeting' ? '' : nextEvent.name);
+    formatEventDateTime(nextMeeting, nextMeeting.name, `${nextMeeting.weekday} ${nextMeeting.time}`);
   if (document.getElementById('next-meeting-venue')) {
     document.getElementById('next-meeting-venue').innerHTML = nextMeeting.venue;
   }
@@ -78,24 +73,21 @@ function setupHomeNextMeeting(events) {
 
   // next social
   if (social.length > 0) {
-    var nextSocial = social[0];
-
-    document.getElementById('next-social-date').innerHTML = formatEventDateTime(nextSocial, nextSocial.name, nextSocial.weekday + " " + nextSocial.time);
-    if (document.getElementById('next-social-venue')) {
-      document.getElementById('next-social-venue').innerHTML = nextSocial.venue;
-    }
-    if (document.getElementById('next-social-address')) {
-      document.getElementById('next-social-address').innerHTML = nextSocial.address;
-    }
+    social = social.slice(0, 3);
+    document.getElementById('upcoming-socials').innerHTML = social.map(evt => {
+      return `<article class="focus-date event-social">
+        ${formatEventDateTime(evt, evt.name, `${evt.weekday} ${evt.time}`)}
+      </article>`;
+    }).join('');
   } else {
-    document.getElementById('section-next-social').remove();
+    document.getElementById('upcoming-socials').innerHTML = '<p>No events in the next few weeks</p>';
   }
 
   // next online
-  if (online.length > 0) {
+  if (online.length > 0 && social.length < 3) {
     var nextOnline = online[0];
 
-    document.getElementById('next-online-date').innerHTML = formatEventDateTime(nextOnline, nextOnline.name, nextOnline.time);
+    document.getElementById('next-online-date').innerHTML = formatEventDateTime(nextOnline, nextOnline.name, `${nextOnline.weekday} ${nextOnline.time}`);
   } else {
     document.getElementById('section-next-online').remove();
   }

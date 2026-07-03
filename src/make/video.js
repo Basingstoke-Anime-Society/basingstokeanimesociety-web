@@ -250,7 +250,7 @@ function makeVideos(basData) {
       // console.log(`  Plate start = ${plateStart}`);
       // console.log(`  Plate end = ${plateEnd}`);
 
-      let cmd = `ffmpeg -y -i video/interval-base5.mkv -loop 1 -i ${series1picture} -loop 1 -i ${series2picture} -loop 1 -i ${series3picture} -loop 1 -i ${shadow255} -c:a copy -filter_complex "`+
+      let cmd = `ffmpeg -y -i video/interval-base7.mkv -loop 1 -i ${series1picture} -loop 1 -i ${series2picture} -loop 1 -i ${series3picture} -loop 1 -i ${shadow255} -c:a copy -filter_complex "`+
 
         `[1:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart-plateOffset*2}:d=${plateFade}:alpha=1 [s1];`+
         `[2:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart-plateOffset}:d=${plateFade}:alpha=1 [s2];`+
