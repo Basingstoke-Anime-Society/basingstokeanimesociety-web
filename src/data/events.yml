@@ -531,6 +531,11 @@ events:
     class: social
     venue: The Tavern
     time: 6pm
+  - name: Crafternoon
+    date: 2026-07-18
+    class: social
+    venue: Willows Cafe
+    time: 12pm
   - name: Board Games
     date: 2026-08-13
     class: social
