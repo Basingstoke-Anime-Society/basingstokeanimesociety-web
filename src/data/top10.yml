@@ -215,6 +215,9 @@ top10:
       - name: "Delicious in Dungeon"
         picture: delicious-in-dungeon
         genre: [ "Adventure", "Drama", "Comedy" ]
+      - name: "Witch Hat Atelier"
+        picture: witch-hat-atelier
+        genre: [ "Adventure", "Drama", "Mystery" ]
       - name: "Great Pretender"
         picture: great-pretender
         genre: [ "Mystery", "Adventure" ]
@@ -233,12 +236,12 @@ top10:
       - name: "Spy × Family"
         picture: spy-x-family
         genre: [ "Comedy", "Action", "Adventure" ]
-      - name: "Insomniacs After School"
-        picture: insomnia
-        genre: [ "Slice of life", "Romance" ]
-      - name: "Girls Band Cry"
-        picture: girls-band-cry
-        genre: [ "Music", "Drama" ]
+      # - name: "Insomniacs After School"
+      #   picture: insomnia
+      #   genre: [ "Slice of life", "Romance" ]
+      # - name: "Girls Band Cry"
+      #   picture: girls-band-cry
+      #   genre: [ "Music", "Drama" ]
 
 
   - name: NoviceOtaku
@@ -250,6 +253,12 @@ top10:
       - name: Last Exile
         picture: last-exile
         genre: [ "Action", "Adventure", "Mystery", "War" ]
+      - name: Horimiya
+        picture: horimiya
+        genre: [ "Romance" ]
+      - name: Princess Mononoke
+        picture: princess-mononoke
+        genre: [ "Action", "Drama" ]
       - name: Alderamin on the Sky
         picture: alderamin-on-the-sky
         genre: [ "War", "Action" ]
@@ -259,9 +268,9 @@ top10:
       - name: My Love Story!
         picture: oremonogatari
         genre: [ "Romance", "Comedy", "Slice of life" ]
-      - name: Miss Kobayashi's Dragon Maid
-        picture: kobayashi-dragon-maid
-        genre: [ "Comedy", "Romance", "Slice of life" ]
+      # - name: Miss Kobayashi's Dragon Maid
+      #   picture: kobayashi-dragon-maid
+      #   genre: [ "Comedy", "Romance", "Slice of life" ]
       - name: Bunny Drop
         picture: bunny-drop
         genre: [ "Slice of life", "Drama" ]
@@ -271,9 +280,9 @@ top10:
       - name: From The New World
         picture: shinsekai-yori
         genre: [ "Mystery", "Drama", "Dark" ]
-      - name: Carole & Tuesday
-        picture: carole-and-tuesday
-        genre: [ "Music", "Drama", "Sci fi" ]
+      # - name: Carole & Tuesday
+      #   picture: carole-and-tuesday
+      #   genre: [ "Music", "Drama", "Sci fi" ]
       # - name: Chrno Crusade
       #   picture: chrno-crusade
       #   genre: [ "Action", "Comedy", "Romance" ]
