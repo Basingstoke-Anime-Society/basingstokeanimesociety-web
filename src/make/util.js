@@ -139,27 +139,13 @@ let now = new Date(Date.now());
 console.log("Today:           ", formatShortDate(now));
 
 // find all future items, as well as
-function currentAndFuture(items, key = 'date', requireName = true) {
+function currentAndFuture(items, key = 'date', requireName = true, fromDate = false) {
   items = _.sortBy(items, key);
   if (requireName) {
     items = _.filter(items, item => _.has(item, "name"));
   }
 
-  let [before, after] = _.partition(items, item => item[key] < now);
-  let current = before[before.length - 1];
-  if (current !== undefined) {
-    after.unshift(current);
-  }
-  return after;
-}
-
-function recentAndFuture(items, key = 'date', requireName = true) {
-  items = _.sortBy(items, key);
-  if (requireName) {
-    items = _.filter(items, item => _.has(item, "name"));
-  }
-
-  let cutoff = recentDateCutoff();
+  let cutoff = fromDate ? fromDate : now;
   let [before, after] = _.partition(items, item => item[key] < cutoff);
   let current = before[before.length - 1];
   if (current !== undefined) {
@@ -168,13 +154,29 @@ function recentAndFuture(items, key = 'date', requireName = true) {
   return after;
 }
 
-function futureN(items, number, key = 'date', requireName = true) {
+function recentAndFuture(items, key = 'date', requireName = true, fromDate = false) {
   items = _.sortBy(items, key);
   if (requireName) {
     items = _.filter(items, item => _.has(item, "name"));
   }
 
-  items = _.filter(items, item => item[key] > now);
+  let cutoff = fromDate ? fromDate : recentDateCutoff();
+  let [before, after] = _.partition(items, item => item[key] < cutoff);
+  let current = before[before.length - 1];
+  if (current !== undefined) {
+    after.unshift(current);
+  }
+  return after;
+}
+
+function futureN(items, number, key = 'date', requireName = true, fromDate = false) {
+  items = _.sortBy(items, key);
+  if (requireName) {
+    items = _.filter(items, item => _.has(item, "name"));
+  }
+
+  let cutoff = fromDate ? fromDate : now;
+  items = _.filter(items, item => item[key] > cutoff);
   items = items.slice(0, number);
   if (key != 'date') {
     _.each(items, item => item.date = item[key]);
