@@ -281,6 +281,11 @@ slot1:
     rating: 15
     count: 24
     genre: [ "Action", "Drama" ]
+    episodes:
+      - episode: 7
+        show: single
+      - episode: 20
+        show: single
 
 slot2:
   - from: 2019-01-08
