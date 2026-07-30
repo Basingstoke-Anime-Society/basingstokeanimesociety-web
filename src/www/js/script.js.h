@@ -37,51 +37,55 @@ function parseQuery(queryString) {
 }
 
 window.onload = function () {
-  if (isHome) {
-    setupHome();
-  }
-
-  if (isRecommendations) {
-    setupRecommendations();
-  }
-
-  if (isHistory) {
-    setupHistory();
-  }
-
-  setupSlideshow();
-  setupTabs(true);
-
-  // add hover on all the rating symbols
-  function addRatingHover(item) {
-    var img = item.getElementsByClassName("rating-img")[0];
-    var hover = item.getElementsByClassName("rating-hover")[0];
-    var tag = item.getElementsByClassName("rating__tag")[0];
-
-    if (img === undefined) {
-      return;
+  try {
+    if (isHome) {
+      setupHome();
     }
 
-    img.addEventListener("mouseover", function(event) {
-      hover.classList.add("rating-hover--show");
+    if (isRecommendations) {
+      setupRecommendations();
+    }
 
-      var imgbox = img.getBoundingClientRect();
-      var hoverbox = hover.getBoundingClientRect();
+    if (isHistory) {
+      setupHistory();
+    }
 
-      var left = imgbox.left - hoverbox.left + 17;
-      tag.style.left = left+"px";
-    });
-    img.addEventListener("mouseout", function(event) {
-      hover.classList.remove("rating-hover--show");
-    });
+    setupSlideshow();
+    setupTabs(true);
+
+    // add hover on all the rating symbols
+    function addRatingHover(item) {
+      var img = item.getElementsByClassName("rating-img")[0];
+      var hover = item.getElementsByClassName("rating-hover")[0];
+      var tag = item.getElementsByClassName("rating__tag")[0];
+
+      if (img === undefined) {
+        return;
+      }
+
+      img.addEventListener("mouseover", function(event) {
+        hover.classList.add("rating-hover--show");
+
+        var imgbox = img.getBoundingClientRect();
+        var hoverbox = hover.getBoundingClientRect();
+
+        var left = imgbox.left - hoverbox.left + 17;
+        tag.style.left = left+"px";
+      });
+      img.addEventListener("mouseout", function(event) {
+        hover.classList.remove("rating-hover--show");
+      });
+    }
+
+    var ratingElements = document.getElementsByClassName('rating');
+    for (var item of ratingElements) {
+      addRatingHover(item);
+    }
+
+    selectBackground();
+  } catch (e) {
+    console.log(e);
   }
-
-  var ratingElements = document.getElementsByClassName('rating');
-  for (var item of ratingElements) {
-    addRatingHover(item);
-  }
-
-  selectBackground();
 };
 setInterval(selectBackground, 300000); // 5 minutes
 

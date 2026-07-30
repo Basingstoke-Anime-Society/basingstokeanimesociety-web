@@ -6,7 +6,7 @@ function setupHome() {
   var yesterday = new Date(Date.now());
   yesterday.setDate(yesterday.getDate() - 1);
   var nearfuture = new Date(Date.now());
-  nearfuture.setDate(nearfuture.getDate() + 28);
+  nearfuture.setDate(nearfuture.getDate() + 60);
 
   // adjust the events list
   let futureEvents = events.filter(function (event) {

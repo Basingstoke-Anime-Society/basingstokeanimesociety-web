@@ -1281,9 +1281,6 @@ article img.portrait {
   margin-top: 0;
   padding: 2px 27px 5px 18px;
 }
-#events-list article:nth-child(n+11) {
-  display: none;
-}
 
 #events-list--show-more {
   border: 0 none;
