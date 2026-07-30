@@ -281,6 +281,11 @@ slot1:
     rating: 15
     count: 24
     genre: [ "Action", "Drama" ]
+    episodes:
+      - episode: 7
+        show: single
+      - episode: 20
+        show: single
 
 slot2:
   - from: 2019-01-08
@@ -1016,3 +1021,10 @@ movies:
     rating: 15
     hide: true
 
+  - name: "Nausicaä of the Valley of the Wind"
+    date: 2026-08-22
+    time: 1pm
+    picture: nausicaa
+    venue: "The White Hart"
+    rating: pg
+    hide: true
