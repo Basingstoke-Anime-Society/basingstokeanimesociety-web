@@ -546,7 +546,7 @@ events:
     class: social
     venue: Willows Cafe
     time: 12pm
-  - name: "Matinee: TBD" # Nausicaä of the Valley of the Wind
+  - name: "Matinee: Nausicaä of the Valley of the Wind"
     date: 2026-08-22
     movie: true
     class: cinema
