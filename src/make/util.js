@@ -206,6 +206,12 @@ function plus1week(from) {
   return date;
 }
 
+function plus1month(from) {
+  let date = new Date(from);
+  date.setDate(date.getDate() + 30);
+  return date;
+}
+
 function recentDateCutoff() {
   let date = new Date();
   date.setDate(date.getDate() - 30);
@@ -297,6 +303,7 @@ module.exports = {
   tomorrow,
   yesterday,
   plus1week,
+  plus1month,
   recentDateCutoff,
   firstTuesdayFrom,
   backdate,

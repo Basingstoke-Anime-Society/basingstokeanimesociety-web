@@ -555,6 +555,7 @@ events:
     venue: "The White Hart"
     rating: 15
     prename: "Matinee"
+    screenname: "Nausicaä of the Valley of the Wind"
   - name: Board Games
     date: 2026-09-10
     class: social
