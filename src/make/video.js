@@ -14,6 +14,7 @@ const intervalAudioTracks = [
 function makeVideos(basData) {
 
 
+
   // ============ BOOKENDS ============ //
 
   // collect the dates on which series change
@@ -245,6 +246,22 @@ function makeVideos(basData) {
 
 
 
+  // ============ LOAD JSON =========== //
+
+  let previousData = JSON.parse(fs.readFileSync('../bookends/bookends.json'));
+  let nextData = structuredClone(util.currentAndFuture(previousData));
+
+  console.log("Previous bookend data:", previousData);
+  console.log("Next bookend data:", nextData);
+
+  let previousByDate = {};
+  for (let tuesday of previousData) {
+    util.expandDate(tuesday);
+    previousByDate[tuesday.shortDate] = tuesday;
+  }
+
+
+
   // ============ INTERVALS ============ //
 
 
@@ -269,23 +286,43 @@ function makeVideos(basData) {
   // Find all the Tuesdays we have scheduled
   let tuesdays = basData.events.filter((event) => event.class == 'anime');
   tuesdays = util.futureN(tuesdays, 4);
-  console.log("Future Tuesdays", tuesdays);
+  // console.log("Future Tuesdays", tuesdays);
 
   // make the intervals
   for (let tuesday of tuesdays) {
     let name = tuesday.shortDate;
 
-    // Interval overlay
-    if (fs.existsSync(`../bookends/overlay-${name}.png`)) {
-      console.log("Skipping overlay:", name);
+    let events = util.futureN(promoEvents, 3, 'date', false, new Date(name));
+    let cutoff = util.plus1month(new Date(tuesday.date));
+    events = events.filter((event) => event.date < cutoff);
+
+    // console.log("Events on:", tuesday);
+    // console.log("Events:", events);
+
+    // Make an events key to compare to the last time
+    let eventsKey = events.map((e) => {
+      let n = (e.screenname ? e.screenname : e.name);
+      return `${e.shortDate}|${e.name}`;
+    }).join(',');
+    console.log("Events key", eventsKey);
+
+    function eventsKeyMatch(eventsKey, previous) {
+      if (previous === undefined || previous === null) {
+        return false;
+      }
+      if (!('eventsKey' in previous) || previous.eventsKey === undefined || previous.eventsKey == null) {
+        return false;
+      }
+      return previous.eventsKey == eventsKey;
+    }
+
+
+    if (fs.existsSync(`../bookends/interval-${name}.png` && !eventsKeyMatch(eventsKey, previousByDate[name]))) {
+      console.log("Skipping interval:", name);
     } else {
-      let events = util.futureN(promoEvents, 3, 'date', false, new Date(name));
-      // let cutoff = util.plus1month(new Date(tuesday.date));
-      // events = events.filter((event) => event.date < cutoff);
-      console.log("Events on:", tuesday);
-      console.log("Events:", events);
+      console.log("Creating interval:", name);
 
-
+      // Interval overlay
       const E_TOP = 20;
       const E_SQUARE = 64;
       const E_MID = E_SQUARE / 2 + 1;
@@ -315,7 +352,7 @@ function makeVideos(basData) {
 
         console.log("Colour:", colour, "Left:", eLeft, "Mid:", eMid, "Name:", eName);
 
-        let name = (event.screenname ? event.screenname : event.name);
+        let displayName = (event.screenname ? event.screenname : event.name);
 
         let cmd =
           `-gravity northwest -draw "image SrcOver ${eLeft},${E_TOP} ${E_SQUARE},${E_SQUARE} video/date-${colour}.png" `+
@@ -331,8 +368,8 @@ function makeVideos(basData) {
 
         cmd = cmd +
           `-font 'Open Sans Bold' -pointsize 28 `+
-          `\\( -pointsize 28 -fill black -stroke black -strokewidth 1 -gravity west -size ${E_WIDTH}x${E_SQUARE} caption:"${name}" -geometry +${eName}+5 \\) -composite `+
-          `\\( -pointsize 28 -fill white -stroke none -strokewidth 0 -gravity west -size ${E_WIDTH}x${E_SQUARE} caption:"${name}" -geometry +${eName}+4 \\) -composite `;
+          `\\( -pointsize 28 -fill black -stroke black -strokewidth 1 -gravity west -size ${E_WIDTH}x${E_SQUARE} caption:"${displayName}" -geometry +${eName}+5 \\) -composite `+
+          `\\( -pointsize 28 -fill white -stroke none -strokewidth 0 -gravity west -size ${E_WIDTH}x${E_SQUARE} caption:"${displayName}" -geometry +${eName}+4 \\) -composite `;
           // `-gravity northwest -draw "fill black stroke black text ${eName},${E_SHADOW} '${name}'" `+
           // `-gravity northwest -draw "fill white text ${eName},${E_BASELINE} '${name}'" `;
 
@@ -343,8 +380,8 @@ function makeVideos(basData) {
 
       let overlay_cmd = `magick -size 1280x100 xc:none `+
 
-        // label settings
-        `-font 'Open Sans Bold' -pointsize 24 `;
+      // label settings
+      `-font 'Open Sans Bold' -pointsize 24 `;
 
       if (events.length > 0) {
         overlay_cmd = overlay_cmd + drawEvent(events[0], 0);
@@ -366,92 +403,102 @@ function makeVideos(basData) {
       exec(overlay_cmd, (err, stdout, stderr) => {
         if (err) {
           console.log(err);
+          return;
         }
-      })
-    }
 
 
-    // Interval video
-    if (fs.existsSync(`../bookends/interval-${name}.mkv`)) {
-      console.log("Skipping interval:", name);
-    } else {
-      let frameRate = 24;
-      let intervalDur = 20 * 60;
-      let fadeDur = 2;
-      let fadeOutStart = intervalDur - fadeDur;
+        /*
+        // Interval video
+        let frameRate = 24;
+        let intervalDur = 20 * 60;
+        let fadeDur = 2;
+        let fadeOutStart = intervalDur - fadeDur;
 
-      let plateDur = 35;
-      let plateOffset = 0.5;
-      let plateFadeDur = 1.5;
-      let plateEndBuf = 3;
-      let plateStart = intervalDur - plateEndBuf - plateDur;
-      let plateEnd = intervalDur - plateEndBuf;
+        let plateDur = 35;
+        let plateOffset = 0.5;
+        let plateFadeDur = 1.5;
+        let plateEndBuf = 3;
+        let plateStart = intervalDur - plateEndBuf - plateDur;
+        let plateEnd = intervalDur - plateEndBuf;
 
 
-      let schedule = basData.schedule[name];
-      console.log("Schedule:", schedule);
+        let schedule = basData.schedule[name];
+        console.log("Schedule:", schedule);
 
-      let series1picture = 'series/'+schedule.slot1.series.picture+'.png';
-      let series2picture = 'series/'+schedule.slot2.series.picture+'.png';
-      let series3picture = 'series/'+schedule.slot3.series.picture+'.png';
+        let series1picture = 'series/'+schedule.slot1.series.picture+'.png';
+        let series2picture = 'series/'+schedule.slot2.series.picture+'.png';
+        let series3picture = 'series/'+schedule.slot3.series.picture+'.png';
 
-      let hash = createHmac('sha256', 'SECRET AGENT MAAAAAN!')
-               .update(name)
-               .digest('hex');
-      let index = parseInt(hash, 16) % 3;
-      console.log("Interval", name, "uses interval music", index, "-", intervalAudioTracks[index]);
-      let randomAudio = intervalAudioTracks[index];
+        let hash = createHmac('sha256', 'SECRET AGENT MAAAAAN!')
+                 .update(name)
+                 .digest('hex');
+        let index = parseInt(hash, 16) % 3;
+        console.log("Interval", name, "uses interval music", index, "-", intervalAudioTracks[index]);
+        let randomAudio = intervalAudioTracks[index];
 
-      let eventsPlate = `../bookends/overlay-${name}.png`;
+        let eventsPlate = `../bookends/overlay-${name}.png`;
 
-      let cmd = `ffmpeg -y -i "video/New Interval Base.mkv" `+
-        `-loop 1 -i ${series1picture} `+
-        `-loop 1 -i ${series2picture} `+
-        `-loop 1 -i ${series3picture} `+
-        `-loop 1 -i ${shadow255} `+
-        `-i "${randomAudio}" `+
-        `-loop 1 -i "${eventsPlate}" `+
+        let cmd = `ffmpeg -y -i "video/New Interval Base.mkv" `+
+          `-loop 1 -i ${series1picture} `+
+          `-loop 1 -i ${series2picture} `+
+          `-loop 1 -i ${series3picture} `+
+          `-loop 1 -i ${shadow255} `+
+          `-i "${randomAudio}" `+
+          `-loop 1 -i "${eventsPlate}" `+
 
-        `-filter_complex "`+
+          `-filter_complex "`+
 
-        `[1:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart-plateOffset*2}:d=${plateFadeDur}:alpha=1 [s1];`+
-        `[2:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart-plateOffset}:d=${plateFadeDur}:alpha=1 [s2];`+
-        `[3:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart}:d=${plateFadeDur}:alpha=1 [s3];`+
-        `[4:v] fps=fps=${frameRate},scale=265x376,fade=in:st=${plateStart-plateOffset*2}:d=${plateFadeDur}:alpha=1 [sh1];` +
-        `[4:v] fps=fps=${frameRate},scale=265x376,fade=in:st=${plateStart-plateOffset}:d=${plateFadeDur}:alpha=1 [sh2];` +
-        `[4:v] fps=fps=${frameRate},scale=265x376,fade=in:st=${plateStart}:d=${plateFadeDur}:alpha=1 [sh3];` +
-        `[6:v] fps=fps=${frameRate},fade=out:st=${plateStart - plateFadeDur * 2}:d=${plateFadeDur}:alpha=1 [events];` +
+          `[1:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart-plateOffset*2}:d=${plateFadeDur}:alpha=1 [s1];`+
+          `[2:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart-plateOffset}:d=${plateFadeDur}:alpha=1 [s2];`+
+          `[3:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart}:d=${plateFadeDur}:alpha=1 [s3];`+
+          `[4:v] fps=fps=${frameRate},scale=265x376,fade=in:st=${plateStart-plateOffset*2}:d=${plateFadeDur}:alpha=1 [sh1];` +
+          `[4:v] fps=fps=${frameRate},scale=265x376,fade=in:st=${plateStart-plateOffset}:d=${plateFadeDur}:alpha=1 [sh2];` +
+          `[4:v] fps=fps=${frameRate},scale=265x376,fade=in:st=${plateStart}:d=${plateFadeDur}:alpha=1 [sh3];` +
+          `[6:v] fps=fps=${frameRate},fade=out:st=${plateStart - plateFadeDur * 2}:d=${plateFadeDur}:alpha=1 [events];` +
 
-        `[0:v][s1] overlay=230:327 [in1]; `+
-        `[in1][s2] overlay=515:327 [in2]; `+
-        `[in2][s3] overlay=800:327 [in3]; `+
+          `[0:v][s1] overlay=230:327 [in1]; `+
+          `[in1][s2] overlay=515:327 [in2]; `+
+          `[in2][s3] overlay=800:327 [in3]; `+
 
-        `[in3][sh1] overlay=225:327 [in4]; `+
-        `[in4][sh2] overlay=510:327 [in5]; `+
-        `[in5][sh3] overlay=795:327 [in6]; `+
+          `[in3][sh1] overlay=225:327 [in4]; `+
+          `[in4][sh2] overlay=510:327 [in5]; `+
+          `[in5][sh3] overlay=795:327 [in6]; `+
 
-        `[in6][events] overlay=0:600 [in7]; `+
+          `[in6][events] overlay=0:600 [in7]; `+
 
-        `[in7] fade=in:st=0:d=${fadeDur},fade=out:st=${fadeOutStart}:d=${fadeDur}" `+
-        // `[in3] fade=in:0:60 [in4]; `+
-        // `[in3] fade=out:35911:60" `+
-        `-t 00:20:00 -sws_flags lanczos `+
+          `[in7] fade=in:st=0:d=${fadeDur},fade=out:st=${fadeOutStart}:d=${fadeDur}" `+
+          // `[in3] fade=in:0:60 [in4]; `+
+          // `[in3] fade=out:35911:60" `+
+          `-t 00:20:00 -sws_flags lanczos `+
 
-        `-map "5:a" `+
-        `../bookends/interval-${name}.mkv`;
+          `-map "5:a" `+
+          `../bookends/interval-${name}.mkv`;
 
-      console.log(cmd);
+        console.log(cmd);
 
-      exec(cmd, (err, stdout, stderr) => {
-        if (err) {
-          //some err occurred
-          console.error(err)
-        } else {
-        }
+        exec(cmd, (err, stdout, stderr) => {
+          if (err) {
+            //some err occurred
+            console.error(err)
+          } else {
+          }
+        });
+        */
+
+
       });
     }
-
   }
+
+
+  // ============ SAVE JSON =========== //
+
+  // TODO cull data fields
+
+  fs.writeFile('../bookends/bookends.json', JSON.stringify(nextData), 'utf-8', (err) => {
+    console.log(err);
+  });
+
 }
 
 

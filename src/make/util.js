@@ -26,6 +26,12 @@ function readData() {
   return basData;
 }
 
+const v8 = require('v8');
+
+const structuredClone = obj => {
+  return v8.deserialize(v8.serialize(obj));
+};
+
 
 // date formats
 
@@ -285,6 +291,7 @@ function slugify(value) {
 
 module.exports = {
   readData,
+  structuredClone,
   formatDay,
   formatYear,
   formatShortMonth,

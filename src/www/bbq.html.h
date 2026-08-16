@@ -127,5 +127,4 @@ twq('track','PageView');
 </aside>
 
 <script src="script.js?ver={{ scriptVersion }}"></script>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
