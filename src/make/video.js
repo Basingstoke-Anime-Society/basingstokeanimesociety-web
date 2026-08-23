@@ -195,10 +195,8 @@ function makeVideos(basData) {
   // ============ LOAD JSON =========== //
 
   let previousData = JSON.parse(fs.readFileSync('../bookends/bookends.json'));
-  // let nextData = structuredClone(util.currentAndFuture(previousData));
 
-  console.log("Previous bookend data:", previousData);
-  // console.log("Next bookend data:", nextData);
+  // console.log("Previous bookend data:", previousData);
 
   let previousByDate = {};
   for (let prev of previousData) {
@@ -247,7 +245,7 @@ function makeVideos(basData) {
       break;
     }
 
-    let events = util.futureN(promoEvents, 3, 'date', false, new Date(name));
+    let events = util.futureN(promoEvents, 3, 'date', false, new Date(tuesday.date));
     let cutoff = util.plus1month(new Date(tuesday.date));
     events = events.filter((event) => event.date < cutoff);
 

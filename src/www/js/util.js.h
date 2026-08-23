@@ -109,7 +109,7 @@ function setupTabs(auto = false) {
       }
 
       pickTab(code);
-    }, 5000);
+    }, 8000);
   }
 
   // pick panes
