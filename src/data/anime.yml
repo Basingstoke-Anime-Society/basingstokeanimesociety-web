@@ -287,6 +287,13 @@ slot1:
       - episode: 20
         show: single
 
+  - from: 2026-10-06
+    name: "Shoshimin: How to Become Ordinary"
+    picture: shoshimin
+    rating: pg
+    count: 22
+    genre: [ "Mystery", "Slice of Life" ]
+
 slot2:
   - from: 2019-01-08
     name: Hunter &times; Hunter
@@ -569,6 +576,16 @@ slot2:
     count: 10
     rating: pg
     genre: [ "Isekai", "Slice of life" ]
+
+  - from: 2026-11-03
+    name: "A Place Further Than the Universe"
+    picture: a-place-further-than-the-universe
+    count: 13
+    rating: pg
+    genre: [ "" ]
+    episodes:
+      - episode: 7
+        show: single
 
 slot3:
   - from: 2020-02-18
@@ -918,6 +935,13 @@ slot3:
     picture: bartender
     rating: 15
     genre: [ "Slice of life" ]
+    count: 12
+
+  - from: 2026-11-03
+    name: "Nyaight of the Living Cat"
+    picture: nyaight-of-the-living-cat
+    rating: pg
+    genre: [ "Comedy", "Horror" ]
     count: 12
 
 
