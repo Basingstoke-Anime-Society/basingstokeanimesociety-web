@@ -561,11 +561,32 @@ events:
     class: social
     venue: The Tavern
     time: 6pm
+  - name: 20th Anniversary BBQ
+    date: 2026-09-12
+    class: social
+    venue: Swarraton Village Hall, SO24 9TQ
+    time: 11am
+    special: true
+  - name: Matinee
+    date: 2026-10-03
+    movie: true
+    class: cinema
+    price: "£2"
+    time: 1pm
+    venue: "The White Hart"
+    rating: 15
+    # prename: "Matinee"
+    # screenname: "Nausicaä of the Valley of the Wind"
   - name: Board Games
     date: 2026-10-08
     class: social
     venue: The Tavern
     time: 6pm
+  - name: Crafternoon
+    date: 2026-10-10
+    class: social
+    venue: Willows Cafe
+    time: 12pm
   - name: Board Games
     date: 2026-11-12
     class: social
@@ -590,4 +611,93 @@ events:
     hide: true
   - name: No Meeting
     date: 2026-12-29
+    class: skip
+
+  # 2027
+
+  - name: Board Games
+    date: 2027-01-14
+    class: social
+    venue: The Tavern
+    time: 6pm
+
+  - name: Board Games
+    date: 2027-02-11
+    class: social
+    venue: The Tavern
+    time: 6pm
+
+  - name: Board Games
+    date: 2027-03-11
+    class: social
+    venue: The Tavern
+    time: 6pm
+
+  - name: Board Games
+    date: 2027-04-08
+    class: social
+    venue: The Tavern
+    time: 6pm
+
+  - name: Board Games
+    date: 2027-05-13
+    class: social
+    venue: The Tavern
+    time: 6pm
+
+  - name: Board Games
+    date: 2027-06-10
+    class: social
+    venue: The Tavern
+    time: 6pm
+
+  - name: Board Games
+    date: 2027-07-08
+    class: social
+    venue: The Tavern
+    time: 6pm
+
+  - name: Board Games
+    date: 2027-08-12
+    class: social
+    venue: The Tavern
+    time: 6pm
+
+  - name: Board Games
+    date: 2027-09-09
+    class: social
+    venue: The Tavern
+    time: 6pm
+
+  - name: Board Games
+    date: 2027-10-14
+    class: social
+    venue: The Tavern
+    time: 6pm
+
+  - name: Board Games
+    date: 2027-11-11
+    class: social
+    venue: The Tavern
+    time: 6pm
+
+  - name: Board Games
+    date: 2027-12-09
+    class: social
+    venue: The Tavern
+    time: 6pm
+
+  - name: No Nostalgia Stream
+    date: 2027-12-20
+    class: skip
+    hide: true
+  - name: No Meeting
+    date: 2027-12-21
+    class: skip
+  - name: No Nostalgia Stream
+    date: 2027-12-27
+    class: skip
+    hide: true
+  - name: No Meeting
+    date: 2027-12-28
     class: skip

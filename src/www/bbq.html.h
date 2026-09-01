@@ -36,10 +36,6 @@ twq('track','PageView');
 </head>
 <body class="day home-page">
 
-<div id='section-logo'>
-<img src='images/logo.png' id='logo'>
-</div>
-
 <nav id='section-social'>
 <a class='btn btn-mail' href='mailto:marcus@basingstokeanimesociety.com'><i></i><span>Mail</span></a>
 <a class='btn btn-twitter' href='https://twitter.com/BasingAnime' target="_blank"><i></i><span>Twitter</span></a>
@@ -49,7 +45,10 @@ twq('track','PageView');
 
 <main>
 
-<h1 id='main-title'>Basingstoke Anime Society</h1>
+<div id='section-logo'>
+  <h1 id='main-title'>Basingstoke Anime Society</h1>
+  <img src='images/newlogo.png' id='logo'>
+</div>
 
 <a id='home-link' href='/'><img src='images/back.png'> Home</a>
 
