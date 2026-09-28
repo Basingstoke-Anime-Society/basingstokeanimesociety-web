@@ -1,10 +1,8 @@
 const fs = require('fs');
-const { exec } = require('child_process');
-const { createHmac } = require('node:crypto');
-const _ = require('lodash');
 const colors = require('colors');
 
 const util = require('./util.js');
+const videoUtil = require('./video-util.js');
 
 const intervalAudioTracks = [
   'video/Interval music 1 - Carole & Tuesday.mp3',
@@ -20,9 +18,11 @@ const SKIP_BOOKENDS = false;
 const shadow255 = "video/shadow255.png";
 const shadow315 = "video/shadow315.png";
 
+let commandQueue = [];
 
 
-function makeVideos(basData) {
+
+function makePlaylistVideos(basData) {
 
   console.log("\n\n\n\n");
   console.log("VIDEOS".bold);
@@ -137,15 +137,7 @@ function makeVideos(basData) {
           (series3new ? ` -draw 'image SrcOver 508,160 100,100 video/new-series-ribbon.png'`: '')+
           ` ../bookends/banner-${banner.name}.png`;
 
-        // console.log(banner_cmd);
-
-        exec(banner_cmd, (err, stdout, stderr) => {
-          if (err) {
-            //some err occurred
-            console.error("Error making banner:".red, err.red);
-          } else {
-          }
-        });
+        addToCommandQueue(`Banner ${name}`, banner_cmd);
       }
 
     }
@@ -171,9 +163,9 @@ function makeVideos(basData) {
 
 
   // Look for events worth displaying on the interval
-  let promoEvents = util.futureN(basData.events, 50);
+  let promoEvents = util.futureN(basData.events, 100);
   console.log("Upcoming events:", promoEvents);
-  promoEvents = promoEvents.filter((event) => ['cinema', 'social' /*, 'online'*/].includes(event.class));
+  promoEvents = promoEvents.filter((event) => ['cinema', 'social', 'skip' /*, 'online'*/].includes(event.class) && !event.hide);
   // console.log("Found worthy events:", promoEvents);
 
   // Find the end of each slot's scheduled shows
@@ -210,7 +202,7 @@ function makeVideos(basData) {
     }
 
     let events = util.futureN(promoEvents, 3, 'date', false, new Date(tuesday.date));
-    let cutoff = util.plus1month(new Date(tuesday.date));
+    let cutoff = util.plusNmonth(new Date(tuesday.date), 2);
     events = events.filter((event) => event.date < cutoff);
 
     // console.log("Events on:", tuesday.name.yellow, events);
@@ -222,7 +214,7 @@ function makeVideos(basData) {
     }).join(',');
     // console.log("Events key", eventsKey);
 
-    function eventsKeyMatch(eventsKey, previous) {
+    function eventsKeysMatch(eventsKey, previous) {
       if (previous === undefined || previous === null) {
         return false;
       }
@@ -233,281 +225,30 @@ function makeVideos(basData) {
     }
 
 
-
+    // =========== MAKE THINGS ========== //
 
     if (fs.existsSync(`../bookends/overlay-${name}.png`)
         && (SKIP_INTERVALS || fs.existsSync(`../bookends/interval-${name}.mkv`))
         && (SKIP_BOOKENDS || fs.existsSync(`../bookends/bookend-${prevWeekName}.mkv`))
-        && eventsKeyMatch(eventsKey, previousByDate[name])) {
+        && eventsKeysMatch(eventsKey, previousByDate[name])) {
       console.log("Skipping interval:".blue, name.yellow, "and bookend:".blue, prevWeekName.yellow);
     } else {
-      console.log("Creating interval:".green, name.yellow, "and bookend:".green, prevWeekName.yellow);
+      let series = [schedule.slot1.series, schedule.slot2.series, schedule.slot3.series];
 
-      // console.log("Events on:", tuesday.name.yellow, events);
-
-      // console.log(" - Overlay:", fs.existsSync(`../bookends/overlay-${name}.png`) ? "exists".green : "missing".red);
-      // console.log(" - Interval:", fs.existsSync(`../bookends/interval-${name}.mkv`) ? "exists".green : "missing".red);
-      // console.log(" - Bookend:", fs.existsSync(`../bookends/bookend-${name}.mkv`) ? "exists".green : "missing".red);
-      // console.log(" - Events key:", eventsKey, eventsKeyMatch(eventsKey, previousByDate[name]) ? "match".green : "no match".red);
-
-
-
-      // === INTERVAL OVERLAY === //
-      tuesday.eventsKey = eventsKey;
-      previousByDate[name] = tuesday;
-
-      const E_TOP = 20;
-      const E_SQUARE = 64;
-      const E_MID = E_SQUARE / 2 + 1;
-      const E_START = 40;
-      const E_SHIFT = 400;
-      const E_WIDTH = 300;
-      const E_PRENAME = 2;
-      const E_BASELINE = 28;
-      const E_SHADOW = E_BASELINE + 1;
-      const E_WEEKDAY = 23;
-      const E_DAY = 38;
-      const E_MONTH = 67;
-      const E_NAME_OFFSET = 80;
-
-      const COLOURS = {
-        'cinema': 'red',
-        'social': 'green',
-        'online': 'blue'
-      };
-
-      function drawEvent(event, index) {
-        // console.log("Event", index, ":", event);
-        let colour = COLOURS[event.class];
-
-        let eLeft = E_START + (E_SHIFT * index);
-        let eMid = eLeft + E_MID;
-        let eName = eLeft + E_NAME_OFFSET;
-
-        // console.log("Colour:", colour, "Left:", eLeft, "Mid:", eMid, "Name:", eName);
-
-        let displayName = (event.screenname ? event.screenname : event.name);
-
-        let cmd =
-          `-font 'Noto-Sans' -pointsize 16 -gravity northwest -draw "image SrcOver ${eLeft},${E_TOP} ${E_SQUARE},${E_SQUARE} video/date-${colour}.png" `+
-          `\\( -pointsize 15 -fill black -background None -stroke none -strokewidth 0 +size label:"${event.shortWeekday}" -geometry +%[fx:${eMid}-w/2]+${E_WEEKDAY} \\) -composite `+
-          `\\( -pointsize 34 -fill black -background None -stroke none -strokewidth 0 +size label:"${event.day}" -geometry +%[fx:${eMid}-w/2]+${E_DAY} \\) -composite `+
-          `\\( -pointsize 15 -fill black -background None -stroke none -strokewidth 0 +size label:"${event.month}" -geometry +%[fx:${eMid}-w/2]+${E_MONTH} \\) -composite `;
-
-        if (event.prename) {
-          cmd = cmd +
-            `-font 'Noto-Sans-Bold' -pointsize 16 ` +
-            `-draw "fill black text ${eName},${E_PRENAME+1} '${event.prename.toUpperCase()}'" ` +
-            `-draw "fill #ff8 text ${eName},${E_PRENAME} '${event.prename.toUpperCase()}'" `;
-        }
-
-        cmd = cmd +
-          `-font 'Noto-Sans-Condensed-Bold' `+
-          `\\( -pointsize 28 -fill black -stroke black -strokewidth 1 -gravity west -size ${E_WIDTH}x${E_SQUARE} caption:"${displayName}" -geometry +${eName}+3 \\) -composite `+
-          `\\( -pointsize 28 -fill white -stroke none -strokewidth 0 -gravity west -size ${E_WIDTH}x${E_SQUARE} caption:"${displayName}" -geometry +${eName}+2 \\) -composite `;
-          // `-gravity northwest -draw "fill black stroke black text ${eName},${E_SHADOW} '${name}'" `+
-          // `-gravity northwest -draw "fill white text ${eName},${E_BASELINE} '${name}'" `;
-
-        // console.log(cmd);
-        return cmd;
+      if (!SKIP_OVERLAY) {
+        videoUtil.makeIntervalOverlay(name, series);
       }
-
-
-      let overlay_cmd = `magick -size 1280x100 xc:none `;
-
-      if (events.length > 0) {
-        overlay_cmd = overlay_cmd + drawEvent(events[0], 0);
-
-        if (events.length > 1) {
-          overlay_cmd = overlay_cmd + drawEvent(events[1], 1);
-
-          if (events.length > 2) {
-            overlay_cmd = overlay_cmd + drawEvent(events[2], 2);
-          }
-        }
-      } else {
-        overlay_cmd = overlay_cmd +
-          `-font 'Open Sans Bold' -pointsize 28 -draw "fill black text 100,100 '.'" `;
+      if (!SKIP_INTERVALS) {
+        videoUtil.makeIntervalVideo(name, series);
       }
-
-
-      // write
-      overlay_cmd = overlay_cmd +
-        `../bookends/overlay-${name}.png`;
-
-      console.log(overlay_cmd);
-
-      exec(overlay_cmd, (err, stdout, stderr) => {
-        if (err) {
-          console.log("Error making overlay:".red, err);
-          return;
-        }
-
-        let series1picture = 'series/'+schedule.slot1.series.picture+'.png';
-        let series2picture = 'series/'+schedule.slot2.series.picture+'.png';
-        let series3picture = 'series/'+schedule.slot3.series.picture+'.png';
-
-
-
-        // === INTERVAL VIDEO === //
-        let frameRate = 24;
-        let intervalDur = 20 * 60;
-        let fadeDur = 2;
-        let fadeOutStart = intervalDur - fadeDur;
-
-        if (!SKIP_INTERVALS) {
-          let plateDur = 35;
-          let plateOffset = 0.5;
-          let plateFadeDur = 1.5;
-          let plateEndBuf = 3;
-          let plateStart = intervalDur - plateEndBuf - plateDur;
-          let plateEnd = intervalDur - plateEndBuf;
-
-          let hash = createHmac('sha256', 'SECRET AGENT MAAAAAN!')
-                   .update(name)
-                   .digest('hex');
-          let index = parseInt(hash, 16) % 3;
-          console.log("Interval", name.yellow, "uses interval music", index, "-", intervalAudioTracks[index]);
-          let randomAudio = intervalAudioTracks[index];
-
-          let eventsPlate = `../bookends/overlay-${name}.png`;
-
-          let cmd = `ffmpeg -y -i "video/New Interval Base.mkv" `+
-            `-loop 1 -i ${series1picture} `+
-            `-loop 1 -i ${series2picture} `+
-            `-loop 1 -i ${series3picture} `+
-            `-loop 1 -i ${shadow255} `+
-            `-i "${randomAudio}" `+
-            `-loop 1 -i "${eventsPlate}" `+
-
-            `-filter_complex "`+
-
-            `[1:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart-plateOffset*2}:d=${plateFadeDur}:alpha=1 [s1];`+
-            `[2:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart-plateOffset}:d=${plateFadeDur}:alpha=1 [s2];`+
-            `[3:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart}:d=${plateFadeDur}:alpha=1 [s3];`+
-            `[4:v] fps=fps=${frameRate},scale=264x376,fade=in:st=${plateStart-plateOffset*2}:d=${plateFadeDur}:alpha=1 [sh1];` +
-            `[4:v] fps=fps=${frameRate},scale=264x376,fade=in:st=${plateStart-plateOffset}:d=${plateFadeDur}:alpha=1 [sh2];` +
-            `[4:v] fps=fps=${frameRate},scale=264x376,fade=in:st=${plateStart}:d=${plateFadeDur}:alpha=1 [sh3];` +
-            `[6:v] fps=fps=${frameRate},fade=out:st=${plateStart - plateFadeDur * 2}:d=${plateFadeDur}:alpha=1 [events];` +
-
-            `[0:v][s1] overlay=230:327 [in1]; `+
-            `[in1][s2] overlay=515:327 [in2]; `+
-            `[in2][s3] overlay=800:327 [in3]; `+
-
-            `[in3][sh1] overlay=226:327 [in4]; `+
-            `[in4][sh2] overlay=510:327 [in5]; `+
-            `[in5][sh3] overlay=796:327 [in6]; `+
-
-            `[in6][events] overlay=0:600 [in7]; `+
-
-            `[in7] fade=in:st=0:d=${fadeDur},fade=out:st=${fadeOutStart}:d=${fadeDur}" `+
-            `-t 00:20:00 -sws_flags lanczos `+
-
-            `-map "5:a" `+
-            `../bookends/interval-${name}.mkv`;
-
-          console.log(cmd);
-
-          exec(cmd, (err, stdout, stderr) => {
-            if (err) {
-              console.error("Error making interval:".red, err)
-            } else {
-            }
-          });
-        }
-
-
-
-
-        // === END OF NIGHT BOOKEND === //
-
-        if (!SKIP_BOOKENDS) {
-          let bookendDur = 15;
-
-          // let plateDur = 35;
-          plateOffset = 0.5;
-          plateFade = 1.5;
-          // let plateEndBuf = 3;
-          plateStart = 2;
-
-          cmd = `ffmpeg -y `+
-            `-i "video/New Bookend Base.mkv" -loop 1 `+
-            `-i ${series1picture} -loop 1 `+
-            `-i ${series2picture} -loop 1 `+
-            `-i ${series3picture} -loop 1 `+
-            `-i ${shadow255} -an `+
-            `-filter_complex "`+
-
-            `[1:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart-plateOffset*2}:d=${plateFade}:alpha=1 [s1];`+
-            `[2:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart-plateOffset}:d=${plateFade}:alpha=1 [s2];`+
-            `[3:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart}:d=${plateFade}:alpha=1 [s3];`+
-            `[4:v] fps=fps=${frameRate},scale=264x376,fade=in:st=${plateStart-plateOffset*2}:d=${plateFade}:alpha=1 [sh1];` +
-            `[4:v] fps=fps=${frameRate},scale=264x376,fade=in:st=${plateStart-plateOffset}:d=${plateFade}:alpha=1 [sh2];` +
-            `[4:v] fps=fps=${frameRate},scale=264x376,fade=in:st=${plateStart}:d=${plateFade}:alpha=1 [sh3];` +
-
-            `[0:v][s1] overlay=230:290 [in1]; `+
-            `[in1][s2] overlay=515:290 [in2]; `+
-            `[in2][s3] overlay=800:290 [in3]; `+
-
-            `[in3][sh1] overlay=226:290 [in4]; `+
-            `[in4][sh2] overlay=510:290 [in5]; `+
-            `[in5][sh3] overlay=796:290 [in6]; `+
-
-            `[in6] fade=in:st=0:d=1 [in7]; `+
-            `[in7] fade=out:st=14:d=1" `+
-            `-t 00:00:15 ../bookends/bookend-${prevWeekName}.mkv`;
-
-          console.log(cmd);
-
-          exec(cmd, (err, stdout, stderr) => {
-            if (err) {
-              console.error("Error making bookend:".red, err);
-            }
-          });
-
-        }
-
-
-      });
+      if (!SKIP_BOOKENDS) {
+        videoUtil.makeBookendVideo(name, series);
+      }
     }
 
 
     // ========== PLAYLIST ========== //
-
-    let playlistName = name.replace('-', ' ').replace('-', ' ');
-    playlistFile = `/home/mdowning/Anime/Playlists/${playlistName}.zpl`
-
-    if (fs.existsSync(playlistFile)) {
-      console.log("Skipping playlist:".blue, playlistName);
-    } else {
-      console.log("Making playlist:".green, playlistName);
-
-      let intervalPath = `C:\\Users\\marcu\\Documents\\Anime Society Website\\bookends\\interval-${name}.mkv`;
-      let bookendPath = `C:\\Users\\marcu\\Documents\\Anime Society Website\\bookends\\bookend-${name}.mkv`;
-      let playlistBody = `\ufeffac=${intervalPath}
-nm=${intervalPath}
-dr=1199
-ft=3
-br!
-nm=${intervalPath}
-dr=1199
-ft=3
-br!
-nm=${intervalPath}
-dr=1199
-ft=3
-br!
-nm=${bookendPath}
-dr=14
-ft=3
-br!
-`;
-      fs.writeFile(playlistFile, playlistBody, 'utf16le', (err) => {
-        if (err) {
-          console.log("Error writing blank playlist:".red, err);
-        }
-      })
-    }
+    makeBlankPlaylist(name);
   }
 
 
@@ -531,9 +272,52 @@ br!
   });
 
 
+
+  // ============ RUN THE ITEMS =========== //
+
+  videoUtil.runCommandQueue();
+}
+
+
+
+function makeBlankPlaylist() {
+  let playlistName = name.replace('-', ' ').replace('-', ' ');
+  playlistFile = `/home/mdowning/Anime/Playlists/${playlistName}.zpl`
+
+  if (fs.existsSync(playlistFile)) {
+    console.log("Skipping playlist:".blue, playlistName);
+  } else {
+    console.log("Making playlist:".green, playlistName);
+
+    let intervalPath = `C:\\Users\\marcu\\Documents\\Anime Society Website\\bookends\\interval-${name}.mkv`;
+    let bookendPath = `C:\\Users\\marcu\\Documents\\Anime Society Website\\bookends\\bookend-${name}.mkv`;
+    let playlistBody = `\ufeffac=${intervalPath}
+nm=${intervalPath}
+dr=1199
+ft=3
+br!
+nm=${intervalPath}
+dr=1199
+ft=3
+br!
+nm=${intervalPath}
+dr=1199
+ft=3
+br!
+nm=${bookendPath}
+dr=14
+ft=3
+br!
+`;
+    fs.writeFile(playlistFile, playlistBody, 'utf16le', (err) => {
+      if (err) {
+        console.log("Error writing blank playlist:".red, err);
+      }
+    });
+  }
 }
 
 
 module.exports = {
-  makeVideos
+  makePlaylistVideos,
 };

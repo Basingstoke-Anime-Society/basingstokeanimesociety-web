@@ -85,7 +85,6 @@ basData.lastModified = util.formatLastModified(new Date());
 
 // combine the full list of past and future shows
 let all_anime = [
-  // ...basData.past_anime,
   ...basData.slot1,
   ...basData.slot2,
   ...basData.slot3,
@@ -150,8 +149,8 @@ basData.comingSoon = comingSoon;
 console.log("Coming Soon:".green, comingSoon.map(item => item.name+" "+util.formatShortDate(item.date).yellow).join(", "));
 
 // copy the images for the series
-_.each([basData.slot1, basData.slot2, basData.slot3, basData.movies], slot => {
-  _.each(slot, series => {
+for (let slot of [basData.slot1, basData.slot2, basData.slot3, basData.movies]) {
+  for (let series of slot) {
     if (fs.existsSync(`series/${series.picture}.png`)) {
       fs.copyFile(`series/${series.picture}.png`, `../dist/images/series/${series.picture}.png`, (err) => {
         if (err) {
@@ -159,10 +158,10 @@ _.each([basData.slot1, basData.slot2, basData.slot3, basData.movies], slot => {
         }
       });
     }
-  });
-});
+  }
+}
 
-_.each(basData.events, (event) => {
+for (let event of basData.events) {
   if (event.picture !== undefined && fs.existsSync('series/'+event.picture+'.png')) {
     fs.copyFile(`series/${event.picture}.png`, `../dist/images/series/${event.picture}.png`, (err) => {
       if (err) {
@@ -170,18 +169,18 @@ _.each(basData.events, (event) => {
       }
     });
   }
-});
+}
 
 
 // news
-_.each(basData.news, article => {
-  article.day = article.date.getDate();
-  article.month = util.formatShortMonth(article.date);
-  article.year = util.formatYear(article.date);
-});
-basData.news = _.sortBy(basData.news, 'date').reverse();
-basData.freshNews = _.take(basData.news, basData.options.newsCutoff);
-basData.staleNews = basData.news.slice(basData.options.newsCutoff, 20);
+// for (let article of basData.news) {
+//   article.day = article.date.getDate();
+//   article.month = util.formatShortMonth(article.date);
+//   article.year = util.formatYear(article.date);
+// }
+// basData.news = _.sortBy(basData.news, 'date').reverse();
+// basData.freshNews = _.take(basData.news, basData.options.newsCutoff);
+// basData.staleNews = basData.news.slice(basData.options.newsCutoff, 20);
 
 // future events
 let now = new Date(Date.now());
@@ -189,15 +188,15 @@ console.log("Today:           ", util.formatShortDate(now).yellow);
 console.log("Yesterday:       ", util.formatShortDate(util.yesterday()).yellow);
 let events = _.filter(basData.events, event => event.date >= util.yesterday());
 let skipDates = [];
-events = _.map(events, event => {
-  event = _.defaults(event, {
-    time: ''
-  });
-  event = _.defaults(event, {
+events = events.map((event) => {
+  event = {
+    time: '',
+    special: event.class == 'cinema',
     class: 'social',
     ..._events.expandEventDate(event.date),
-    special: event.class == 'cinema',
-  });
+    ...event,
+  };
+
   let venue = "";
   switch(event.class) {
     case 'social':
@@ -210,16 +209,17 @@ events = _.map(events, event => {
       venue = "";
       break;
   }
-  return _.defaults(event, {
-    venue: venue,
+  return {
+    ...event,
     address: _events.venueAddress[venue],
-  })
+    venue: venue,
+  };
 });
 console.log("Skip dates:", skipDates);
 
 // add in events for the new series starting
 _.each([basData.slot1, basData.slot2, basData.slot3], (slot, i) => {
-  _.each(slot, series => {
+  for (let series of slot) {
     if (_.has(series, "name")) {
       let hide = _.has(series, "hide") ? series.hide : false;
       let date = new Date(series.from);
@@ -241,10 +241,10 @@ _.each([basData.slot1, basData.slot2, basData.slot3], (slot, i) => {
         events.push(event);
       }
     }
-  });
+  }
 });
 
-_.each(basData.movies, movie => {
+for (let movie of basData.movies) {
   if (_.has(movie, "name")) {
     let hide = _.has(movie, "hide") ? movie.hide : false;
     let date = new Date(movie.date);
@@ -260,7 +260,7 @@ _.each(basData.movies, movie => {
       events.push(event);
     }
   }
-});
+}
 
 // add in the regular events
 events = [
@@ -277,22 +277,9 @@ basData.allEvents = events;
 
 // group the events by date, summarising class
 basData.eventsByDate = _(events).groupBy(e => util.formatShortDate(e.date)).map((evs, grp) => {
-  // evs = evs.filter((evt) => !evt.hide);
-  // if (evs.length == 0) {
-  //   return null;
-  // }
 
   let cls = evs[0].class;
-  // switch colours on days with new series
-  // if (cls == 'anime') {
-  //   for (let ev of evs) {
-  //     if (ev.hasOwnProperty('class') && ev.cls != "") {
-  //       if (ev.class != 'online' && ev.class != 'anime') {
-  //         cls = ev.class;
-  //       }
-  //     }
-  //   }
-  // }
+
   let special = false;
   let hide = true;
   let mini = true;
@@ -341,8 +328,8 @@ if (onlineEvents.length > 0) {
 
 basData.allTop10 = []
 
-_.each(basData.top10, person => {
-  _.each(person.anime, series => {
+for (let person of basData.top10) {
+  for (let series of person.anime) {
     basData.allTop10.push(series);
     if (fs.existsSync(`series/${series.picture}.png`)) {
       fs.copyFile(`series/${series.picture}.png`, `../dist/images/series/${series.picture}.png`, (err) => {
@@ -351,8 +338,8 @@ _.each(basData.top10, person => {
         }
       });
     }
-  });
-});
+  }
+}
 
 // compile sources
 
@@ -393,4 +380,4 @@ setTimeout(() => {
 }, 5000);
 
 
-setTimeout(() => video.makeVideos(basData), 1000);
+// setTimeout(() => video.makePlaylistVideos(basData), 2000);

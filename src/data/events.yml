@@ -567,16 +567,17 @@ events:
     venue: Swarraton Village Hall, SO24 9TQ
     time: 11am
     special: true
-  - name: Matinee
+  - name: "Matinee: Paprika"
     date: 2026-10-03
     movie: true
     class: cinema
     price: "£2"
     time: 1pm
+    picture: paprika
     venue: "The White Hart"
     rating: 15
-    # prename: "Matinee"
-    # screenname: "Nausicaä of the Valley of the Wind"
+    prename: "Matinee"
+    screenname: "Paprika"
   - name: Board Games
     date: 2026-10-08
     class: social
@@ -597,6 +598,11 @@ events:
     class: social
     venue: The Tavern
     time: 6pm
+  - name: Year End Party
+    date: 2026-12-15
+    class: social
+    venue: The White Hart
+    time: 7pm
 
   - name: No Nostalgia Stream
     date: 2026-12-21

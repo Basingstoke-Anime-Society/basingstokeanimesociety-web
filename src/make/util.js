@@ -218,6 +218,12 @@ function plus1month(from) {
   return date;
 }
 
+function plusNmonth(from, n) {
+  let date = new Date(from);
+  date.setDate(date.getDate() + 30 * n);
+  return date;
+}
+
 function minus1week(from) {
   let date = new Date(from);
   date.setDate(date.getDate() - 7);
@@ -317,6 +323,7 @@ module.exports = {
   yesterday,
   plus1week,
   plus1month,
+  plusNmonth,
   minus1week,
   recentDateCutoff,
   firstTuesdayFrom,

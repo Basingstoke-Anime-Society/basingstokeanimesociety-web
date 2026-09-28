@@ -1052,3 +1052,11 @@ movies:
     venue: "The White Hart"
     rating: pg
     hide: true
+
+  - name: "Paprika"
+    date: 2026-10-03
+    time: 1pm
+    picture: paprika
+    venue: "The White Hart"
+    rating: 15
+    hide: true
