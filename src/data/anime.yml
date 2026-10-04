@@ -294,6 +294,22 @@ slot1:
     count: 22
     genre: [ "Mystery", "Slice of Life" ]
 
+  - from: 2027-01-05
+    name: "The Saga of Tanya the Evil S2"
+    picture: tanya-the-evil
+    rating: 15
+    count: 12
+    genre: [ "Action", "War", "Isekai" ]
+
+  - from: 2027-02-16
+    name: "Orb: On The Movements of The Earth"
+    picture: orb
+    rating: 15
+    count: 25
+    episodes:
+      - episode: 3
+        show: single
+
 slot2:
   - from: 2019-01-08
     name: Hunter &times; Hunter
@@ -582,10 +598,27 @@ slot2:
     picture: a-place-further-than-the-universe
     count: 13
     rating: pg
-    genre: [ "" ]
+    genre: [ "Adventure", "Drama" ]
     episodes:
       - episode: 7
         show: single
+
+  - from: 2027-01-05
+    name: "16bit Sensation: Another Layer"
+    picture: 16bit-sensation
+    count: 13
+    rating: 15
+    genre: [ "Adventure", "Isekai" ]
+    episodes:
+      - episode: 7
+        show: single
+
+  - from: 2027-02-23
+    name: "One Week Friends"
+    picture: one-week-friends
+    count: 12
+    rating: pg
+    genre: [ "Romance", "Drama" ]
 
 slot3:
   - from: 2020-02-18
@@ -944,6 +977,19 @@ slot3:
     genre: [ "Comedy", "Horror" ]
     count: 12
 
+  - from: 2027-01-05
+    name: "mono"
+    picture: mono
+    rating: pg
+    count: 12
+    genre: [ "Comedy", "Slice of life" ]
+
+  - from: 2027-02-16
+    name: "Saving 80,000 Gold in Another World for My Retirement"
+    picture: saving-80000-gold
+    rating: 12
+    count: 12
+    genre: [ "Isekai", "Slice of life", "Adventure" ]
 
 movies:
   - name: "Konosuba - Legend of Crimson"

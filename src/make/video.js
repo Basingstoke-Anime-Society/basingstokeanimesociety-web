@@ -1,10 +1,12 @@
 const fs = require('fs');
 const colors = require('colors');
+const { createHmac } = require('node:crypto');
 
 const util = require('./util.js');
 const videoUtil = require('./video-util.js');
 
-const intervalAudioTracks = [
+
+const INTERVAL_AUDIO_TRACKS = [
   'video/Interval music 1 - Carole & Tuesday.mp3',
   'video/Interval music 2 - Final fantasy.mp3',
   'video/Interval music 3 - Call of the Night v3.mp3'
@@ -14,12 +16,6 @@ const SKIP_BANNERS = false;
 const SKIP_OVERLAY = false;
 const SKIP_INTERVALS = false;
 const SKIP_BOOKENDS = false;
-
-const shadow255 = "video/shadow255.png";
-const shadow315 = "video/shadow315.png";
-
-let commandQueue = [];
-
 
 
 function makePlaylistVideos(basData) {
@@ -137,7 +133,7 @@ function makePlaylistVideos(basData) {
           (series3new ? ` -draw 'image SrcOver 508,160 100,100 video/new-series-ribbon.png'`: '')+
           ` ../bookends/banner-${banner.name}.png`;
 
-        addToCommandQueue(`Banner ${name}`, banner_cmd);
+        videoUtil.prependToCommandQueue(`Banner ${banner.name}`, banner_cmd);
       }
 
     }
@@ -233,16 +229,38 @@ function makePlaylistVideos(basData) {
         && eventsKeysMatch(eventsKey, previousByDate[name])) {
       console.log("Skipping interval:".blue, name.yellow, "and bookend:".blue, prevWeekName.yellow);
     } else {
-      let series = [schedule.slot1.series, schedule.slot2.series, schedule.slot3.series];
+      let series = [];
+      if (schedule.slot1) {
+        series.push(schedule.slot1.series);
+      }
+      if (schedule.slot2) {
+        series.push(schedule.slot2.series);
+      }
+      if (schedule.slot3) {
+        series.push(schedule.slot3.series);
+      }
 
       if (!SKIP_OVERLAY) {
-        videoUtil.makeIntervalOverlay(name, series);
+        tuesday.eventsKey = eventsKey;
+        previousByDate[name] = tuesday;
+
+        videoUtil.makeIntervalOverlay(name, events);
       }
+
       if (!SKIP_INTERVALS) {
-        videoUtil.makeIntervalVideo(name, series);
+        // pick an audio track
+        let hash = createHmac('sha256', 'SECRET AGENT MAAAAAN!')
+                 .update(name)
+                 .digest('hex');
+        let audioIndex = parseInt(hash, 16) % INTERVAL_AUDIO_TRACKS.length;
+        let audioTrack = INTERVAL_AUDIO_TRACKS[audioIndex];
+        console.log("Interval", name.yellow, "uses interval music", audioIndex, "-", audioTrack);
+
+        videoUtil.makeIntervalVideo(name, series, audioTrack);
       }
+
       if (!SKIP_BOOKENDS) {
-        videoUtil.makeBookendVideo(name, series);
+        videoUtil.makeBookendVideo(prevWeekName, series);
       }
     }
 
@@ -280,7 +298,7 @@ function makePlaylistVideos(basData) {
 
 
 
-function makeBlankPlaylist() {
+function makeBlankPlaylist(name) {
   let playlistName = name.replace('-', ' ').replace('-', ' ');
   playlistFile = `/home/mdowning/Anime/Playlists/${playlistName}.zpl`
 

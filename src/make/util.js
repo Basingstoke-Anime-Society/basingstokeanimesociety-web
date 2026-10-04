@@ -9,11 +9,11 @@ function readData() {
   var files = fs.readdirSync("data", { withFileTypes: true });
 
   let basData = {};
-  _.each(files, file => {
+  for (let file of files) {
     let fileData = fs.readFileSync('data/'+file.name);
     let loadData = yaml.safeLoad(fileData);
     basData = {...basData, ...loadData};
-  });
+  }
 
   basData = {
     ...basData,

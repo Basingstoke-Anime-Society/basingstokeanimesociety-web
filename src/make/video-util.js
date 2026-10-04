@@ -1,8 +1,11 @@
 const fs = require('fs');
 const { exec } = require('child_process');
-const { createHmac } = require('node:crypto');
 const colors = require('colors');
 
+
+const FRAME_RATE = 24;
+const BOOKEND_DUR = 15;
+const INTERVAL_DUR = 20 * 60;
 
 const EVENT_COLOURS = {
   'cinema': 'red',
@@ -12,76 +15,114 @@ const EVENT_COLOURS = {
   'skip': 'red',
 };
 
+const SHADOW255 = "video/shadow255.png";
+const SHADOW315 = "video/shadow315.png";
+
+// LAYOUT CONSTANTS
+const E_TOP = 20;
+const E_SQUARE = 64;
+const E_MID = E_SQUARE / 2 + 1;
+const E_START = 40;
+const E_SHIFT = 400;
+const E_WIDTH = 300;
+const E_PRENAME = 2;
+const E_BASELINE = 28;
+const E_SHADOW = E_BASELINE + 1;
+const E_WEEKDAY = 23;
+const E_DAY = 38;
+const E_MONTH = 67;
+const E_NAME_OFFSET = 80;
+
+// Command Queue
+let commandQueue = [];
+
+
+function seriesPictures(series) {
+  return series.map((s) => 'series/'+s.picture+'.png').slice(0, 3);
+}
+
+
 
 
 function makeBookendVideo(name, series) {
   console.log("Creating bookend:".green, name.yellow, "for series".green, series);
 
   // series pictures
-
+  let pictures = seriesPictures(series);
 
   // layout
-  let bookendDur = 15;
-  // let plateDur = 35;
   plateOffset = 0.5;
   plateFade = 1.5;
-  // let plateEndBuf = 3;
   plateStart = 2;
 
   cmd = `ffmpeg -y `+
     `-i "video/New Bookend Base.mkv" -loop 1 `+
-    `-i ${series1picture} -loop 1 `+
-    `-i ${series2picture} -loop 1 `+
-    `-i ${series3picture} -loop 1 `+
-    `-i ${shadow255} -an `+
-    `-filter_complex "`+
+    `-i ${SHADOW255} -loop 1 `+
+    pictures.map((pic) => `-i ${pic} -loop 1 `).join(" ")+
+    `-filter_complex "`;
 
-    `[1:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart-plateOffset*2}:d=${plateFade}:alpha=1 [s1];`+
-    `[2:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart-plateOffset}:d=${plateFade}:alpha=1 [s2];`+
-    `[3:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart}:d=${plateFade}:alpha=1 [s3];`+
-    `[4:v] fps=fps=${frameRate},scale=264x376,fade=in:st=${plateStart-plateOffset*2}:d=${plateFade}:alpha=1 [sh1];` +
-    `[4:v] fps=fps=${frameRate},scale=264x376,fade=in:st=${plateStart-plateOffset}:d=${plateFade}:alpha=1 [sh2];` +
-    `[4:v] fps=fps=${frameRate},scale=264x376,fade=in:st=${plateStart}:d=${plateFade}:alpha=1 [sh3];` +
+  switch (pictures.length) {
+  case 1:
+    cmd = cmd +
+      `[1:v] fps=fps=${FRAME_RATE},scale=264x376,fade=in:st=${plateStart-plateOffset*2}:d=${plateFade}:alpha=1 [sh1]; ` +
+      `[2:v] fps=fps=${FRAME_RATE},scale=255x366,fade=in:st=${plateStart-plateOffset*2}:d=${plateFade}:alpha=1 [pic1]; `+
 
-    `[0:v][s1] overlay=230:290 [in1]; `+
-    `[in1][s2] overlay=515:290 [in2]; `+
-    `[in2][s3] overlay=800:290 [in3]; `+
+      `[0:v][sh1] overlay=510:290 [shadowed]; `+
+      `[shadowed][pic1] overlay=515:290 [full]; `;
+    break;
 
-    `[in3][sh1] overlay=226:290 [in4]; `+
-    `[in4][sh2] overlay=510:290 [in5]; `+
-    `[in5][sh3] overlay=796:290 [in6]; `+
+  case 2:
+    cmd = cmd +
+      `[1:v] fps=fps=${FRAME_RATE},scale=264x376,fade=in:st=${plateStart-plateOffset*2}:d=${plateFade}:alpha=1 [sh1]; ` +
+      `[1:v] fps=fps=${FRAME_RATE},scale=264x376,fade=in:st=${plateStart-plateOffset}:d=${plateFade}:alpha=1 [sh2]; ` +
+      `[2:v] fps=fps=${FRAME_RATE},scale=255x366,fade=in:st=${plateStart-plateOffset*2}:d=${plateFade}:alpha=1 [pic1]; `+
+      `[3:v] fps=fps=${FRAME_RATE},scale=255x366,fade=in:st=${plateStart-plateOffset}:d=${plateFade}:alpha=1 [pic2]; `+
 
-    `[in6] fade=in:st=0:d=1 [in7]; `+
-    `[in7] fade=out:st=14:d=1" `+
-    `-t 00:00:15 ../bookends/bookend-${prevWeekName}.mkv`;
+      `[0:v][sh1] overlay=367:290 [in1]; `+
+      `[in1][sh2] overlay=653:290 [shadowed]; `+
+
+      `[shadowed][pic1] overlay=372:290 [in2]; `+
+      `[in2][pic2] overlay=658:290 [full]; `;
+
+    break;
+
+  case 3:
+    cmd = cmd +
+      `[1:v] fps=fps=${FRAME_RATE},scale=264x376,fade=in:st=${plateStart-plateOffset*2}:d=${plateFade}:alpha=1 [sh1];` +
+      `[1:v] fps=fps=${FRAME_RATE},scale=264x376,fade=in:st=${plateStart-plateOffset}:d=${plateFade}:alpha=1 [sh2];` +
+      `[1:v] fps=fps=${FRAME_RATE},scale=264x376,fade=in:st=${plateStart}:d=${plateFade}:alpha=1 [sh3];` +
+      `[2:v] fps=fps=${FRAME_RATE},scale=255x366,fade=in:st=${plateStart-plateOffset*2}:d=${plateFade}:alpha=1 [pic1];`+
+      `[3:v] fps=fps=${FRAME_RATE},scale=255x366,fade=in:st=${plateStart-plateOffset}:d=${plateFade}:alpha=1 [pic2];`+
+      `[4:v] fps=fps=${FRAME_RATE},scale=255x366,fade=in:st=${plateStart}:d=${plateFade}:alpha=1 [pic3];`+
+
+      `[0:v][sh1] overlay=226:290 [in1]; `+
+      `[in1][sh2] overlay=510:290 [in2]; `+
+      `[in2][sh3] overlay=796:290 [shadowed]; `+
+
+      `[shadowed][pic1] overlay=230:290 [in3]; `+
+      `[in3][pic2] overlay=515:290 [in4]; `+
+      `[in4][pic3] overlay=800:290 [full]; `;
+    break;
+
+  default:
+    console.log(`Cannot make bookend for ${pictures.length} series`.red);
+    return;
+  }
+
+  cmd = cmd +
+    `[full] fade=in:st=0:d=1 [fin]; `+
+    `[fin] fade=out:st=${BOOKEND_DUR - 1}:d=1" `+
+    `-t 00:00:15 ../bookends/bookend-${name}.mkv`;
 
   addToCommandQueue(`Bookend ${name}`, cmd);
 }
 
 
 
-function makeIntervalOverlay(name, series) {
+function makeIntervalOverlay(name, events) {
   console.log("Creating interval overlay:".green, name.yellow);
 
-  tuesday.eventsKey = eventsKey;
-  previousByDate[name] = tuesday;
-
-  const E_TOP = 20;
-  const E_SQUARE = 64;
-  const E_MID = E_SQUARE / 2 + 1;
-  const E_START = 40;
-  const E_SHIFT = 400;
-  const E_WIDTH = 300;
-  const E_PRENAME = 2;
-  const E_BASELINE = 28;
-  const E_SHADOW = E_BASELINE + 1;
-  const E_WEEKDAY = 23;
-  const E_DAY = 38;
-  const E_MONTH = 67;
-  const E_NAME_OFFSET = 80;
-
   function drawEvent(event, index) {
-    // console.log("Event", index, ":", event);
     let colour = EVENT_COLOURS[event.class];
     if (event.special) {
       colour = EVENT_COLOURS['special'];
@@ -112,10 +153,7 @@ function makeIntervalOverlay(name, series) {
       `-font 'Noto-Sans-Condensed-Bold' `+
       `\\( -pointsize 28 -fill black -stroke black -strokewidth 1 -gravity west -size ${E_WIDTH}x${E_SQUARE} caption:"${displayName}" -geometry +${eName}+3 \\) -composite `+
       `\\( -pointsize 28 -fill white -stroke none -strokewidth 0 -gravity west -size ${E_WIDTH}x${E_SQUARE} caption:"${displayName}" -geometry +${eName}+2 \\) -composite `;
-      // `-gravity northwest -draw "fill black stroke black text ${eName},${E_SHADOW} '${name}'" `+
-      // `-gravity northwest -draw "fill white text ${eName},${E_BASELINE} '${name}'" `;
 
-    // console.log(cmd);
     return cmd;
   }
 
@@ -147,75 +185,91 @@ function makeIntervalOverlay(name, series) {
   addToCommandQueue(`Overlay ${name}`, overlay_cmd);
 }
 
-function makeIntervalVideo(name, series) {
+function makeIntervalVideo(name, series, audioTrack) {
   console.log("Creating interval:".green, name.yellow);
 
-  // console.log("Events on:", tuesday.name.yellow, events);
+  // series pictures
+  let pictures = seriesPictures(series);
 
-  // console.log(" - Overlay:", fs.existsSync(`../bookends/overlay-${name}.png`) ? "exists".green : "missing".red);
-  // console.log(" - Interval:", fs.existsSync(`../bookends/interval-${name}.mkv`) ? "exists".green : "missing".red);
-  // console.log(" - Bookend:", fs.existsSync(`../bookends/bookend-${name}.mkv`) ? "exists".green : "missing".red);
-  // console.log(" - Events key:", eventsKey, eventsKeyMatch(eventsKey, previousByDate[name]) ? "match".green : "no match".red);
-
-
-  let series1picture = 'series/'+schedule.slot1.series.picture+'.png';
-  let series2picture = 'series/'+schedule.slot2.series.picture+'.png';
-  let series3picture = 'series/'+schedule.slot3.series.picture+'.png';
-
-  // === INTERVAL VIDEO === //
-  let frameRate = 24;
-  let intervalDur = 20 * 60;
+  // interval video
   let fadeDur = 2;
-  let fadeOutStart = intervalDur - fadeDur;
+  let fadeOutStart = INTERVAL_DUR - fadeDur;
 
   let plateDur = 35;
   let plateOffset = 0.5;
   let plateFadeDur = 1.5;
   let plateEndBuf = 3;
-  let plateStart = intervalDur - plateEndBuf - plateDur;
-  let plateEnd = intervalDur - plateEndBuf;
-
-  let hash = createHmac('sha256', 'SECRET AGENT MAAAAAN!')
-           .update(name)
-           .digest('hex');
-  let index = parseInt(hash, 16) % 3;
-  console.log("Interval", name.yellow, "uses interval music", index, "-", intervalAudioTracks[index]);
-  let randomAudio = intervalAudioTracks[index];
+  let plateStart = INTERVAL_DUR - plateEndBuf - plateDur;
+  let plateEnd = INTERVAL_DUR - plateEndBuf;
 
   let eventsPlate = `../bookends/overlay-${name}.png`;
 
   let cmd = `ffmpeg -y -i "video/New Interval Base.mkv" `+
-    `-loop 1 -i ${series1picture} `+
-    `-loop 1 -i ${series2picture} `+
-    `-loop 1 -i ${series3picture} `+
-    `-loop 1 -i ${shadow255} `+
-    `-i "${randomAudio}" `+
-    `-loop 1 -i "${eventsPlate}" `+
+    `-i ${SHADOW255} -loop 1 `+
+    `-i "${eventsPlate}" -loop 1 `+
+    pictures.map((pic) => `-i "${pic}" `).join(" ")+
+    `-i "${audioTrack}" `+
+    `-filter_complex "`;
 
-    `-filter_complex "`+
+  let audioNum = pictures.length + 3;
 
-    `[1:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart-plateOffset*2}:d=${plateFadeDur}:alpha=1 [s1];`+
-    `[2:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart-plateOffset}:d=${plateFadeDur}:alpha=1 [s2];`+
-    `[3:v] fps=fps=${frameRate},scale=255x366,fade=in:st=${plateStart}:d=${plateFadeDur}:alpha=1 [s3];`+
-    `[4:v] fps=fps=${frameRate},scale=264x376,fade=in:st=${plateStart-plateOffset*2}:d=${plateFadeDur}:alpha=1 [sh1];` +
-    `[4:v] fps=fps=${frameRate},scale=264x376,fade=in:st=${plateStart-plateOffset}:d=${plateFadeDur}:alpha=1 [sh2];` +
-    `[4:v] fps=fps=${frameRate},scale=264x376,fade=in:st=${plateStart}:d=${plateFadeDur}:alpha=1 [sh3];` +
-    `[6:v] fps=fps=${frameRate},fade=out:st=${plateStart - plateFadeDur * 2}:d=${plateFadeDur}:alpha=1 [events];` +
+  switch (pictures.length) {
+  case 1:
+    cmd = cmd +
+      `[1:v] fps=fps=${FRAME_RATE},scale=264x376,fade=in:st=${plateStart-plateOffset*2}:d=${plateFadeDur}:alpha=1 [sh1]; ` +
+      `[2:v] fps=fps=${FRAME_RATE},fade=out:st=${plateStart - plateFadeDur * 2}:d=${plateFadeDur}:alpha=1 [events]; ` +
 
-    `[0:v][s1] overlay=230:327 [in1]; `+
-    `[in1][s2] overlay=515:327 [in2]; `+
-    `[in2][s3] overlay=800:327 [in3]; `+
+      `[3:v] fps=fps=${FRAME_RATE},scale=255x366,fade=in:st=${plateStart-plateOffset*2}:d=${plateFadeDur}:alpha=1 [pic1]; `+
 
-    `[in3][sh1] overlay=226:327 [in4]; `+
-    `[in4][sh2] overlay=510:327 [in5]; `+
-    `[in5][sh3] overlay=796:327 [in6]; `+
+      `[0:v][sh1] overlay=510:327 [shadowed]; `+
 
-    `[in6][events] overlay=0:600 [in7]; `+
+      `[shadowed][pic1] overlay=515:327 [full]; `;
+    break;
 
-    `[in7] fade=in:st=0:d=${fadeDur},fade=out:st=${fadeOutStart}:d=${fadeDur}" `+
+  case 2:
+    cmd = cmd +
+      `[1:v] fps=fps=${FRAME_RATE},scale=264x376,fade=in:st=${plateStart-plateOffset*2}:d=${plateFadeDur}:alpha=1 [sh1]; ` +
+      `[1:v] fps=fps=${FRAME_RATE},scale=264x376,fade=in:st=${plateStart-plateOffset}:d=${plateFadeDur}:alpha=1 [sh2]; ` +
+      `[2:v] fps=fps=${FRAME_RATE},fade=out:st=${plateStart - plateFadeDur * 2}:d=${plateFadeDur}:alpha=1 [events]; ` +
+
+      `[3:v] fps=fps=${FRAME_RATE},scale=255x366,fade=in:st=${plateStart-plateOffset*2}:d=${plateFadeDur}:alpha=1 [pic1]; `+
+      `[4:v] fps=fps=${FRAME_RATE},scale=255x366,fade=in:st=${plateStart-plateOffset}:d=${plateFadeDur}:alpha=1 [pic2]; `+
+
+      `[0:v][sh1] overlay=226:327 [in1]; `+
+      `[in1][sh2] overlay=510:327 [shadowed]; `+
+
+      `[shadowed][pic1] overlay=230:327 [in2]; `+
+      `[in2][pic2] overlay=515:327 [full]; `;
+    break;
+
+  case 3:
+    cmd = cmd +
+      `[1:v] fps=fps=${FRAME_RATE},scale=264x376,fade=in:st=${plateStart-plateOffset*2}:d=${plateFadeDur}:alpha=1 [sh1]; ` +
+      `[1:v] fps=fps=${FRAME_RATE},scale=264x376,fade=in:st=${plateStart-plateOffset}:d=${plateFadeDur}:alpha=1 [sh2]; ` +
+      `[1:v] fps=fps=${FRAME_RATE},scale=264x376,fade=in:st=${plateStart}:d=${plateFadeDur}:alpha=1 [sh3]; ` +
+      `[2:v] fps=fps=${FRAME_RATE},fade=out:st=${plateStart - plateFadeDur * 2}:d=${plateFadeDur}:alpha=1 [events]; ` +
+
+      `[3:v] fps=fps=${FRAME_RATE},scale=255x366,fade=in:st=${plateStart-plateOffset*2}:d=${plateFadeDur}:alpha=1 [pic1]; `+
+      `[4:v] fps=fps=${FRAME_RATE},scale=255x366,fade=in:st=${plateStart-plateOffset}:d=${plateFadeDur}:alpha=1 [pic2]; `+
+      `[5:v] fps=fps=${FRAME_RATE},scale=255x366,fade=in:st=${plateStart}:d=${plateFadeDur}:alpha=1 [pic3]; `+
+
+      `[0:v][sh1] overlay=226:327 [in1]; `+
+      `[in1][sh2] overlay=510:327 [in2]; `+
+      `[in2][sh3] overlay=796:327 [shadowed]; `+
+
+      `[shadowed][pic1] overlay=230:327 [in3]; `+
+      `[in3][pic2] overlay=515:327 [in4]; `+
+      `[in4][pic3] overlay=800:327 [full]; `;
+      break;
+  }
+
+  cmd = cmd +
+    `[full][events] overlay=0:600 [withevents]; `+
+
+    `[withevents] fade=in:st=0:d=${fadeDur},fade=out:st=${fadeOutStart}:d=${fadeDur}" `+
     `-t 00:20:00 -sws_flags lanczos `+
 
-    `-map "5:a" `+
+    `-map "${audioNum}:a" `+
     `../bookends/interval-${name}.mkv`;
 
   console.log(cmd);
@@ -229,6 +283,10 @@ function addToCommandQueue(name, cmd) {
   commandQueue.push({name, cmd});
 }
 
+function prependToCommandQueue(name, cmd) {
+  commandQueue.unshift({name, cmd});
+}
+
 
 function runCommandQueue() {
   if (commandQueue.length == 0) {
@@ -238,10 +296,11 @@ function runCommandQueue() {
 
   let {name, cmd} = commandQueue.shift();
   console.log("Running command:".green, name);
+  console.log(`<< ${cmd} >>`);
 
   exec(cmd, (err, stdout, stderr) => {
     if (err != null) {
-      console.log("Error running command:".red, name, `<<${cmd}>>`, err);
+      console.log("Error running command:".red, name, err);
     }
 
     runCommandQueue();
@@ -253,5 +312,6 @@ module.exports = {
   makeIntervalOverlay,
   makeIntervalVideo,
   addToCommandQueue,
+  prependToCommandQueue,
   runCommandQueue
 };
