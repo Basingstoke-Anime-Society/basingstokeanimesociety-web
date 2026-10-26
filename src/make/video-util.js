@@ -206,8 +206,8 @@ function makeIntervalVideo(name, series, audioTrack) {
 
   let cmd = `ffmpeg -y -i "video/New Interval Base.mkv" `+
     `-i ${SHADOW255} -loop 1 `+
-    `-i "${eventsPlate}" -loop 1 `+
-    pictures.map((pic) => `-i "${pic}" `).join(" ")+
+    `-i "${eventsPlate}" `+
+    pictures.map((pic) => `-loop 1 -i "${pic}" `).join(" ")+
     `-i "${audioTrack}" `+
     `-filter_complex "`;
 

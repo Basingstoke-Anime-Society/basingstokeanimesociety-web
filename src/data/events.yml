@@ -588,6 +588,11 @@ events:
     class: social
     venue: Willows Cafe
     time: 12pm
+  - name: Crafternoon
+    date: 2026-11-07
+    class: social
+    venue: Willows Cafe
+    time: 12pm
   - name: Board Games
     date: 2026-11-12
     class: social
